@@ -263,24 +263,30 @@ public void clear() {
                     .addComponent(tx_NamaBarang)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4)
-                    .addComponent(tx_JenisBarang, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tx_KodeBarang))
                 .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel7)
-                            .addComponent(txHarga)
-                            .addComponent(jLabel6)
-                            .addComponent(tx_Ukuran, 0, 116, Short.MAX_VALUE)
-                            .addComponent(txHarga1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
-                        .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tx_Jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel8))
-                .addContainerGap(260, Short.MAX_VALUE))
+                            .addComponent(jLabel6)
+                            .addComponent(tx_Ukuran, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tx_JenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
+                        .addComponent(txHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(46, 46, 46)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tx_Jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(190, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,29 +295,25 @@ public void clear() {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tx_KodeBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tx_Ukuran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tx_Jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tx_Jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tx_NamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel8))
-                .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tx_JenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -329,6 +331,7 @@ public void clear() {
             }
         ));
         jTable1.setFocusable(false);
+        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
         jTable1.setOpaque(false);
         jTable1.setRowHeight(25);
         jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
@@ -371,14 +374,13 @@ public void clear() {
                         .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(main_panelLayout.createSequentialGroup()
-                        .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE))
-                        .addGap(101, 101, 101))
-                    .addGroup(main_panelLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_panelLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(jScrollPane3)))
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,28 +390,16 @@ public void clear() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(main_panel, "card2");
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tx_NamaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_NamaBarangActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tx_NamaBarangActionPerformed
-
-    private void txHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txHargaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txHargaActionPerformed
-
-    private void tx_JumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_JumlahActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tx_JumlahActionPerformed
 
     private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
         // TODO add your handling code here:
@@ -451,10 +441,6 @@ JOptionPane.showMessageDialog(null, "Data Tersimpan");
     }
     }//GEN-LAST:event_btn_TambahActionPerformed
 
-    private void txHarga1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txHarga1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txHarga1ActionPerformed
-
     private void btn_BarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BarcodeActionPerformed
         // TODO add your handling code here:   
     String kodeBarang = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
@@ -462,11 +448,27 @@ JOptionPane.showMessageDialog(null, "Data Tersimpan");
     barcodeFrame.setVisible(true);
     }//GEN-LAST:event_btn_BarcodeActionPerformed
 
+    private void txHarga1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txHarga1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txHarga1ActionPerformed
+
     private void tx_JenisBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_JenisBarangActionPerformed
         // TODO add your handling code here:
-         String jenisBarang = (String) tx_JenisBarang.getSelectedItem();
-    autoNumberBarang(jenisBarang);
+        String jenisBarang = (String) tx_JenisBarang.getSelectedItem();
+        autoNumberBarang(jenisBarang);
     }//GEN-LAST:event_tx_JenisBarangActionPerformed
+
+    private void tx_NamaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_NamaBarangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tx_NamaBarangActionPerformed
+
+    private void txHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txHargaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txHargaActionPerformed
+
+    private void tx_JumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_JumlahActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tx_JumlahActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -484,12 +486,12 @@ JOptionPane.showMessageDialog(null, "Data Tersimpan");
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JPanel main_panel;
-    public static javax.swing.JTextField txHarga;
-    public static javax.swing.JTextField txHarga1;
+    private javax.swing.JTextField txHarga;
+    private javax.swing.JTextField txHarga1;
     private javax.swing.JComboBox<String> tx_JenisBarang;
-    public static javax.swing.JTextField tx_Jumlah;
-    public static javax.swing.JTextField tx_KodeBarang;
-    public static javax.swing.JTextField tx_NamaBarang;
+    private javax.swing.JTextField tx_Jumlah;
+    private javax.swing.JTextField tx_KodeBarang;
+    private javax.swing.JTextField tx_NamaBarang;
     private javax.swing.JComboBox<String> tx_Ukuran;
     // End of variables declaration//GEN-END:variables
 }
