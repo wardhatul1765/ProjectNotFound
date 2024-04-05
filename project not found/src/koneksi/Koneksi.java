@@ -18,10 +18,10 @@ public class Koneksi {
 public static Connection getKoneksi(){
     if (koneksi == null){
      try {
-            String url = "jdbc:mysql://localhost/notfound";
+            String url = "jdbc:mysql://localhost:3306/not_found";
             String user = "root";
             String password = "kaka1234";
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             koneksi = DriverManager.getConnection(url, user, password);
             System.out.println("Berhasil");
         } catch (SQLException e) {

@@ -4,6 +4,7 @@
  */
 package base;
 
+import koneksi.Koneksi;
 import Barcode.main;
 import java.awt.Color;
 import java.awt.Font;
@@ -23,31 +24,43 @@ public class Input_Barang extends javax.swing.JPanel {
     Koneksi koneksi= new Koneksi();
     private DefaultTableModel model;
     
-    private void autoNumberBarang() {   
-    try{
+  private void autoNumberBarang(String jenisBarang) {   
+    try {
         Connection c = koneksi.getKoneksi();
         java.sql.Statement s = c.createStatement();
-        String sql = "SELECT * FROM `barang` ORDER BY kode_barang DESC";
-        ResultSet r = s.executeQuery(sql);
-        if(r.next()){
-        String kodeBarang = r.getString("kode_barang");
-        String kodeJenis = kodeBarang.substring(0,2);
-        String NoFaktur = r.getString("kode_barang").substring(2);
-        String BR = "" +(Integer.parseInt(NoFaktur)+1);
-        String Nol = "";
         
-        if (BR.length() ==1){
-            Nol = "00";
-        } else if (BR.length() ==2){
-            Nol = "0";
-        } else if (BR.length() == 3){
-            Nol = "";
-        } else if (BR.length() == 4) {
-            Nol = "";
-        }
-        tx_KodeBarang.setText(kodeJenis+Nol+BR);
+        // Query untuk mendapatkan kode barang terakhir berdasarkan jenis barang
+        String sql = "SELECT * FROM `barang` WHERE jenis_barang = '" + jenisBarang + "' ORDER BY kode_barang DESC";
+        ResultSet r = s.executeQuery(sql);
+        
+        if(r.next()) {
+            String kodeBarang = r.getString("kode_barang");
+            String kodeJenis = kodeBarang.substring(0, 2);
+            String NoFaktur = kodeBarang.substring(2);
+            String BR = "" + (Integer.parseInt(NoFaktur) + 1);
+            String Nol = "";
+        
+            if (BR.length() == 1) {
+                Nol = "00";
+            } else if (BR.length() == 2) {
+                Nol = "0";
+            } else if (BR.length() == 3) {
+                Nol = "";
+            } else if (BR.length() == 4) {
+                Nol = "";
+            }
+            tx_KodeBarang.setText(kodeJenis + Nol + BR);
         } else {
-            tx_KodeBarang.setText("B0001");
+            // Jika tidak ada data barang dengan jenis yang dipilih, gunakan kode default
+            if (jenisBarang.equals("Kaos")) {
+                tx_KodeBarang.setText("KA001");
+            } else if (jenisBarang.equals("Kemeja")) {
+                tx_KodeBarang.setText("KE001");
+            } else if (jenisBarang.equals("Celana")) {
+                tx_KodeBarang.setText("CE001");
+            } else if (jenisBarang.equals("Tas")) {
+                tx_KodeBarang.setText("TA001");
+            }
         }
         r.close();
         s.close();
@@ -136,7 +149,6 @@ public void clear() {
         model.addColumn("Harga Beli");
         model.addColumn("Harga Jual");
         model.addColumn("Jumlah");
-        autoNumberBarang();
         loadDataBarang();
         
         
@@ -224,6 +236,11 @@ public void clear() {
         });
 
         tx_JenisBarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kaos", "Kemeja", "Celana", "Tas" }));
+        tx_JenisBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tx_JenisBarangActionPerformed(evt);
+            }
+        });
 
         tx_Ukuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S", "M,", "L", "XL", "XXL", "XXXL", "-" }));
 
@@ -444,6 +461,12 @@ JOptionPane.showMessageDialog(null, "Data Tersimpan");
     main barcodeFrame = new main(kodeBarang);
     barcodeFrame.setVisible(true);
     }//GEN-LAST:event_btn_BarcodeActionPerformed
+
+    private void tx_JenisBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_JenisBarangActionPerformed
+        // TODO add your handling code here:
+         String jenisBarang = (String) tx_JenisBarang.getSelectedItem();
+    autoNumberBarang(jenisBarang);
+    }//GEN-LAST:event_tx_JenisBarangActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

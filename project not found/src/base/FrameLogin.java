@@ -158,7 +158,7 @@ public class FrameLogin extends javax.swing.JFrame {
 //            Connection c = koneksi.getKoneksi();
             String url = "jdbc:mysql://localhost:3306/not_found";
             String user = "root";
-            String password = "sefin1409";
+            String password = "kaka1234";
 //            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 //            koneksi = DriverManager.getConnection(url, user, password);
 //            System.out.println("Berhasil");
