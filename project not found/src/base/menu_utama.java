@@ -94,12 +94,13 @@ public class menu_utama extends javax.swing.JFrame {
 
         getContentPane().add(pnl_content, java.awt.BorderLayout.CENTER);
 
-        jPanelGradient1.setColorStart(new java.awt.Color(0, 102, 153));
+        jPanelGradient1.setColorEnd(new java.awt.Color(0, 102, 153));
+        jPanelGradient1.setColorStart(new java.awt.Color(255, 255, 255));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Male User 2 (2).png"))); // NOI18N
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("NOT FOUND");
 
         javax.swing.GroupLayout jPanelGradient1Layout = new javax.swing.GroupLayout(jPanelGradient1);
