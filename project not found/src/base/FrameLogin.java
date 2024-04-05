@@ -156,13 +156,13 @@ public class FrameLogin extends javax.swing.JFrame {
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
        try{
 //            Connection c = koneksi.getKoneksi();
-            String url = "jdbc:mysql://localhost/notfound";
+            String url = "jdbc:mysql://localhost:3306/not_found";
             String user = "root";
-            String password = "kaka1234";
+            String password = "sefin1409";
 //            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 //            koneksi = DriverManager.getConnection(url, user, password);
 //            System.out.println("Berhasil");
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection c = DriverManager.getConnection(url, user, password);
 
 
@@ -170,13 +170,13 @@ public class FrameLogin extends javax.swing.JFrame {
             String Password = txt_pass.getText();
             
             java.sql.Statement stm = c.createStatement();
-            String sql = "select * from login where username='"+Username+"' and password='"+Password+"'"; 
+            String sql = "select * from pengguna where username='"+Username+"' and password='"+Password+"'"; 
             
             ResultSet rs = stm.executeQuery(sql);
             
             if(rs.next()) {
                 dispose();
-                TugasAkhirNotFound ksb = new TugasAkhirNotFound();
+                menu_utama ksb = new menu_utama();
                 ksb.show();
             } else {
                JOptionPane.showMessageDialog(null, "Username atau Password salah");

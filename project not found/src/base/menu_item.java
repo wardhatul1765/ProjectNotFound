@@ -64,14 +64,49 @@ public class menu_item extends javax.swing.JPanel {
         lb_iconSub = new javax.swing.JLabel();
         lb_icon = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(204, 204, 255));
+        setBackground(new java.awt.Color(255, 255, 255));
         addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                formMouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 formMousePressed(evt);
             }
         });
 
         lb_MenuName.setText("menu_item");
+        lb_MenuName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lb_MenuNameMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lb_MenuNameMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lb_MenuNameMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lb_MenuNameMousePressed(evt);
+            }
+        });
+
+        lb_iconSub.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lb_iconSubMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lb_iconSubMouseExited(evt);
+            }
+        });
+
+        lb_icon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lb_iconMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lb_iconMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -101,7 +136,7 @@ public class menu_item extends javax.swing.JPanel {
     private boolean showing = false;
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
-    setBackground(new java.awt.Color(204,204,255));
+    setBackground(new java.awt.Color(0,102,153));
     if (showing) {
         hidemenu();
     } else {
@@ -114,6 +149,57 @@ public class menu_item extends javax.swing.JPanel {
 
         
     }//GEN-LAST:event_formMousePressed
+
+    private void lb_MenuNameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_MenuNameMouseEntered
+        // TODO add your handling code here: 
+            setBackground(new java.awt.Color(0,102,153));
+    // Ubah warna teks saat mouse masuk
+    lb_MenuName.setForeground(new java.awt.Color(255, 255, 255));
+    
+    }//GEN-LAST:event_lb_MenuNameMouseEntered
+
+    private void lb_MenuNameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_MenuNameMouseExited
+        // TODO add your handling code here:
+          // Kembalikan warna latar belakang saat mouse keluar
+    setBackground(new java.awt.Color(255, 255, 255)); // Ganti dengan warna latar belakang asli
+    // Kembalikan warna teks saat mouse keluar
+    lb_MenuName.setForeground(new java.awt.Color(0, 0, 0)); // Ganti dengan warna teks asli
+    }//GEN-LAST:event_lb_MenuNameMouseExited
+
+    private void lb_iconMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_iconMouseEntered
+        // TODO add your handling code here:
+            // Ubah warna ikon saat mouse masuk
+    lb_icon.setForeground(new java.awt.Color(255, 255, 255)); // Ganti dengan warna
+    }//GEN-LAST:event_lb_iconMouseEntered
+
+    private void lb_iconMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_iconMouseExited
+        // TODO add your handling code here:
+           lb_icon.setForeground(new java.awt.Color(0, 0, 0)); // Ganti dengan warna ikon asli
+    }//GEN-LAST:event_lb_iconMouseExited
+
+    private void lb_iconSubMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_iconSubMouseEntered
+        // TODO add your handling code here:
+            lb_iconSub.setForeground(new java.awt.Color(255, 255, 255)); // Ganti dengan warna ikon submenu ya
+    }//GEN-LAST:event_lb_iconSubMouseEntered
+
+    private void lb_iconSubMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_iconSubMouseExited
+        // TODO add your handling code here:
+           lb_iconSub.setForeground(new java.awt.Color(0, 0, 0)); // Ganti dengan warna ikon submenu asli
+    }//GEN-LAST:event_lb_iconSubMouseExited
+
+    private void lb_MenuNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_MenuNameMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lb_MenuNameMousePressed
+
+    private void lb_MenuNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_MenuNameMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lb_MenuNameMouseClicked
+
+    private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
+        // TODO add your handling code here:
+        setBackground(new java.awt.Color(255, 255, 255)); 
+        
+    }//GEN-LAST:event_formMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

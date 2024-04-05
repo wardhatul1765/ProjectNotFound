@@ -36,12 +36,14 @@ public class menu_utama extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnl_navbar = new javax.swing.JPanel();
         pnl_sidebar = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         menu_sub = new javax.swing.JPanel();
         pnl_content = new javax.swing.JPanel();
         pnl_utama = new javax.swing.JPanel();
+        jPanelGradient1 = new jpanelgradient.jPanelGradient();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -50,29 +52,13 @@ public class menu_utama extends javax.swing.JFrame {
             }
         });
 
-        pnl_navbar.setBackground(new java.awt.Color(153, 153, 153));
-        pnl_navbar.setPreferredSize(new java.awt.Dimension(742, 80));
-
-        javax.swing.GroupLayout pnl_navbarLayout = new javax.swing.GroupLayout(pnl_navbar);
-        pnl_navbar.setLayout(pnl_navbarLayout);
-        pnl_navbarLayout.setHorizontalGroup(
-            pnl_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 770, Short.MAX_VALUE)
-        );
-        pnl_navbarLayout.setVerticalGroup(
-            pnl_navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(pnl_navbar, java.awt.BorderLayout.PAGE_START);
-
         pnl_sidebar.setBackground(new java.awt.Color(255, 255, 255));
         pnl_sidebar.setPreferredSize(new java.awt.Dimension(250, 369));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(null);
 
-        menu_sub.setBackground(new java.awt.Color(204, 204, 255));
+        menu_sub.setBackground(new java.awt.Color(255, 255, 255));
         menu_sub.setLayout(new javax.swing.BoxLayout(menu_sub, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane1.setViewportView(menu_sub);
 
@@ -84,7 +70,7 @@ public class menu_utama extends javax.swing.JFrame {
         );
         pnl_sidebarLayout.setVerticalGroup(
             pnl_sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
         );
 
         getContentPane().add(pnl_sidebar, java.awt.BorderLayout.LINE_START);
@@ -99,14 +85,45 @@ public class menu_utama extends javax.swing.JFrame {
         pnl_content.setLayout(pnl_contentLayout);
         pnl_contentLayout.setHorizontalGroup(
             pnl_contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnl_utama, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(pnl_utama, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
         );
         pnl_contentLayout.setVerticalGroup(
             pnl_contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnl_utama, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+            .addComponent(pnl_utama, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
         );
 
         getContentPane().add(pnl_content, java.awt.BorderLayout.CENTER);
+
+        jPanelGradient1.setColorStart(new java.awt.Color(0, 102, 153));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Male User 2 (2).png"))); // NOI18N
+
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setText("NOT FOUND");
+
+        javax.swing.GroupLayout jPanelGradient1Layout = new javax.swing.GroupLayout(jPanelGradient1);
+        jPanelGradient1.setLayout(jPanelGradient1Layout);
+        jPanelGradient1Layout.setHorizontalGroup(
+            jPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGradient1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 674, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(20, 20, 20))
+        );
+        jPanelGradient1Layout.setVerticalGroup(
+            jPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelGradient1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanelGradient1, java.awt.BorderLayout.PAGE_START);
 
         pack();
         setLocationRelativeTo(null);
@@ -155,10 +172,12 @@ public class menu_utama extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private jpanelgradient.jPanelGradient jPanelGradient1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel menu_sub;
     private javax.swing.JPanel pnl_content;
-    private javax.swing.JPanel pnl_navbar;
     private javax.swing.JPanel pnl_sidebar;
     private javax.swing.JPanel pnl_utama;
     // End of variables declaration//GEN-END:variables
@@ -242,8 +261,18 @@ public class menu_utama extends javax.swing.JFrame {
         ImageIcon iconData = new ImageIcon(getClass().getResource("/picture/data.png"));
         ImageIcon iconSuplier = new ImageIcon(getClass().getResource("/picture/data.png"));
         ImageIcon iconPengguna = new ImageIcon(getClass().getResource("/picture/data.png"));
+        ImageIcon iconBarang = new ImageIcon(getClass().getResource("/picture/data.png"));
         
-         menu_item Suplier   =new menu_item (null, true, iconSuplier, "Data Suplier", new ActionListener() {
+        menu_item Barang  =new menu_item (null, true, iconBarang, "Data Barang", new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            pnl_utama.removeAll();
+            pnl_utama.add(new Data_Barang());
+            pnl_utama.repaint();
+            pnl_utama.revalidate();
+            }
+        });
+        
+         menu_item Supplier   =new menu_item (null, true, iconSuplier, "Data Suplier", new ActionListener() {
             public void actionPerformed(ActionEvent e){
             pnl_utama.removeAll();
             pnl_utama.add(new Data_Suplier());
@@ -259,7 +288,7 @@ public class menu_utama extends javax.swing.JFrame {
             pnl_utama.revalidate();
          }
             });
-         menu_item menuData    =new menu_item (iconData, false,null,"Data",null,Suplier,Pengguna);
+         menu_item menuData    =new menu_item (iconData, false,null,"Data",null,Barang,Supplier, Pengguna);
          
 
         addMenu(menuDashboard, menuMaster, menuTransaksi, menuData, menuLaporan);
