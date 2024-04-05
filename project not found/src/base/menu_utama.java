@@ -226,15 +226,26 @@ public class menu_utama extends javax.swing.JFrame {
          menu_item menuMaster    =new menu_item (iconMaster, false,null,"Master",null,InputanBarang,InputanSuplier,InputanPengguna);
         
         ImageIcon iconTransaksi = new ImageIcon(getClass().getResource("/picture/transaksi.png"));
-         menu_item menuTransaksi   =new menu_item (iconTransaksi, false,null,"Transaksi",new ActionListener() {
+        ImageIcon iconPembelian = new ImageIcon(getClass().getResource("/picture/transaksi.png"));
+        ImageIcon iconPenjualan = new ImageIcon(getClass().getResource("/picture/transaksi.png"));
+         menu_item Pembelian   =new menu_item (null, true,iconPembelian,"Pembelian",new ActionListener() {
             public void actionPerformed(ActionEvent e){
             pnl_utama.removeAll();
-            pnl_utama.add(new Transaksi());
+            pnl_utama.add(new Pembelian());
             pnl_utama.repaint();
             pnl_utama.revalidate();
          }
             });
-        
+         menu_item Penjualan   =new menu_item (null, true,iconPenjualan,"Penjualan",new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+            pnl_utama.removeAll();
+            pnl_utama.add(new Penjualan());
+            pnl_utama.repaint();
+            pnl_utama.revalidate();
+         }
+            });
+         menu_item menuTransaksi    =new menu_item (iconTransaksi, false,null,"Transaksi",null,Pembelian,Penjualan);
+                 
         ImageIcon iconLaporan = new ImageIcon(getClass().getResource("/picture/laporan.png"));
         ImageIcon iconBarangMasuk = new ImageIcon(getClass().getResource("/picture/laporan.png"));
         ImageIcon iconBarangKeluar = new ImageIcon(getClass().getResource("/picture/laporan.png"));
