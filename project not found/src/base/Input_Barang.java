@@ -135,9 +135,9 @@ public void clear() {
      */
         public Input_Barang() {
             initComponents();
- 
-
-        
+            
+            
+            
         model = new DefaultTableModel();
         
         jTable1.setModel(model);
@@ -319,15 +319,15 @@ public void clear() {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("Input Barang");
 
+        jScrollPane3.setBorder(null);
+
+        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Kode Barang", "Nama Barang", "Jenis Barang", "Jumlah", "Ukuran","Harga"
+                "Kode Barang", "Nama Barang", "Jenis Barang", "Ukuran", "Harga Beli", "Harga Jual", "Jumlah"
             }
         ));
         jTable1.setFocusable(false);
@@ -486,12 +486,12 @@ JOptionPane.showMessageDialog(null, "Data Tersimpan");
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JPanel main_panel;
-    private javax.swing.JTextField txHarga;
-    private javax.swing.JTextField txHarga1;
+    public static javax.swing.JTextField txHarga;
+    public static javax.swing.JTextField txHarga1;
     private javax.swing.JComboBox<String> tx_JenisBarang;
-    private javax.swing.JTextField tx_Jumlah;
-    private javax.swing.JTextField tx_KodeBarang;
-    private javax.swing.JTextField tx_NamaBarang;
+    public static javax.swing.JTextField tx_Jumlah;
+    public static javax.swing.JTextField tx_KodeBarang;
+    public static javax.swing.JTextField tx_NamaBarang;
     private javax.swing.JComboBox<String> tx_Ukuran;
     // End of variables declaration//GEN-END:variables
 }
