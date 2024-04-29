@@ -88,9 +88,9 @@ public class Input_Suplier extends javax.swing.JPanel {
     private void tambahDataSementara() {
         String idSupplier = tx_Id.getText();
         String nama = tx_Nama.getText();
-        String noTlp = tx_Telp.getText();
         String alamat = tx_Alamat.getText();
-        model.addRow(new String[]{idSupplier, nama, noTlp, alamat});
+        String noTlp = tx_Telp.getText();
+        model.addRow(new String[]{idSupplier, nama, alamat, noTlp});
     }
 
 
