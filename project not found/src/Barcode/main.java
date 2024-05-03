@@ -23,9 +23,9 @@ public class main extends javax.swing.JFrame {
         
     }
 
-    public main(String kodeBarang) {
+    public main(String NoBarcode) {
        initComponents();
-    br_data.setText(kodeBarang);
+    br_data.setText(NoBarcode);
     }
 
     /**
@@ -122,7 +122,7 @@ public class main extends javax.swing.JFrame {
             
             String fname = br_data.getText();
             
-            barcode.renderBarcode("C:\\Users\\KakaPatria\\OneDrive\\Documents\\GitHub\\ProjectNotFound\\project not found\\src\\Barcode\\" + fname +".png");
+            barcode.renderBarcode("D:\\Git\\Project\\ProjectNotFound\\project not found\\src\\Barcode" + fname +".png");
 
             
         }catch (Exception e) {

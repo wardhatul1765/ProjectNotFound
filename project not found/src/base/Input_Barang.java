@@ -8,6 +8,7 @@ import koneksi.Koneksi;
 import Barcode.main;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -70,7 +71,7 @@ public class Input_Barang extends javax.swing.JPanel {
 
 }
     
-    public void loadData(){
+    public void tambahDataSementara(){
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     model.addRow(new Object[]{
         tx_KodeBarang.getText(),
@@ -82,6 +83,17 @@ public class Input_Barang extends javax.swing.JPanel {
         tx_Jumlah.getText(),
         tx_Nobarcode.getText()
     });
+}
+    
+private void hapusDataSementara() {
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    int rowCount = model.getRowCount();
+    
+    // Hapus semua baris satu per satu dari belakang ke depan
+    for (int i = rowCount - 1; i >= 0; i--) {
+        model.removeRow(i);
+    }
+
 }
 
 public void kosong(){
@@ -101,36 +113,7 @@ public void clear() {
     tx_Nobarcode.setText("");
 }
     
-    public void loadDataBarang(){
-    model.getDataVector().removeAllElements();
-    model.fireTableDataChanged();
-    
-    try{
-        Connection c = koneksi.getKoneksi();
-        java.sql.Statement s = c.createStatement();
-        
-        String sql = "SELECT * FROM barang";
-        ResultSet r = s.executeQuery(sql);
-        
-        while(r.next()){
-            Object[] obj = new Object[8];
-            obj [0] = r.getString("kode_barang");
-            obj [1] = r.getString("nama_barang");
-            obj [2] = r.getString("jenis_barang");
-            obj [3] = r.getString("ukuran");
-            obj [4] = r.getString("harga_beli");
-            obj [5] = r.getString("harga_jual");
-            obj [6] = r.getString("jumlah");
-            obj [7] = r.getString("no_barcode");
-            
-            model.addRow(obj);
-        }
-        r.close();
-        s.close();
-    }catch(Exception e){
-        e.printStackTrace();
-    }
-}
+  
 
 
     /**
@@ -153,13 +136,56 @@ public void clear() {
         model.addColumn("Harga Jual");
         model.addColumn("Jumlah");
         model.addColumn("No Barcode");
-        loadDataBarang();
         
         
     }
     
    
+    private void characterDigit(KeyEvent evt) {
+        char character = evt.getKeyChar();
+        if(!Character.isDigit(character)) {
+            evt.consume();
+        }
+    }
     
+    private void tambahData() {
+            int baris = jTable1.getRowCount();
+            for(int i = 0; i < baris; i++) {
+                String kodeBrg = (String) jTable1.getValueAt(i, 0);
+                String namaBarang = (String) jTable1.getValueAt(i, 1);
+                String jenisBarang = (String) jTable1.getValueAt(i, 2);
+                String ukuran = (String) jTable1.getValueAt(i, 3);
+                System.out.println(ukuran);
+                double hrgBeli = Double.parseDouble((String)jTable1.getValueAt(i, 4));
+                double hrgJual = Double.parseDouble((String) jTable1.getValueAt(i, 5));
+                int jumlah = Integer.parseInt((String) jTable1.getValueAt(i, 6));
+                String noBarcode = (String) jTable1.getValueAt(i, 7);
+                addData(kodeBrg, namaBarang, jenisBarang, ukuran, hrgBeli, hrgJual, jumlah, noBarcode);
+            }
+    }
+    
+    private void addData(String kodeBrg, String namaBarang, String jenisBarang, String ukuran, double hrgBeli, double hrgJual, int jumlah, String noBarcode) {
+    DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+    Connection c = koneksi.getKoneksi();
+         try {
+            String sql = "INSERT INTO barang (kode_barang, harga_beli, jumlah, ukuran, harga_jual, jenis_barang, nama_barang, no_barcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            java.sql.PreparedStatement p = c.prepareStatement(sql);
+
+            p.setString(1, kodeBrg);
+            p.setDouble(2, hrgBeli);
+            p.setInt(3, jumlah); // K
+            p.setString(4, ukuran); // Kolom 4: Ukuran
+            p.setDouble(5, hrgJual); // Kolom 5: Harga Jual
+            p.setString(6, jenisBarang); // Kolom 6: Jenis barang
+            p.setString(7, namaBarang); // Kolom 7: nama barang
+            p.setString(8, noBarcode);
+            p.executeUpdate();
+            p.close();
+            
+         } catch(Exception ex) {
+             System.err.println(ex.getMessage());
+         }
+    }
     
     
     
@@ -195,8 +221,11 @@ public void clear() {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btn_Tambah = new javax.swing.JButton();
+        btn_Simpan = new javax.swing.JButton();
         btn_Barcode = new javax.swing.JButton();
+        btn_Tambah = new javax.swing.JButton();
+        btn_Edit2 = new javax.swing.JButton();
+        btn_batal2 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(520, 422));
         setLayout(new java.awt.CardLayout());
@@ -221,6 +250,11 @@ public void clear() {
         txHarga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txHargaActionPerformed(evt);
+            }
+        });
+        txHarga.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txHargaKeyTyped(evt);
             }
         });
 
@@ -256,6 +290,11 @@ public void clear() {
                 txHarga1ActionPerformed(evt);
             }
         });
+        txHarga1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txHarga1KeyTyped(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setText("Harga Jual");
@@ -264,6 +303,11 @@ public void clear() {
         tx_Jumlah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tx_JumlahActionPerformed(evt);
+            }
+        });
+        tx_Jumlah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tx_JumlahKeyTyped(evt);
             }
         });
 
@@ -366,7 +410,15 @@ public void clear() {
             new String [] {
                 "Kode Barang", "Nama Barang", "Jenis Barang", "Ukuran", "Harga Beli", "Harga Jual", "Jumlah"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setFocusable(false);
         jTable1.setGridColor(new java.awt.Color(255, 255, 255));
         jTable1.setOpaque(false);
@@ -383,31 +435,48 @@ public void clear() {
         });
         jScrollPane3.setViewportView(jTable1);
 
-        btn_Tambah.setBackground(new java.awt.Color(182, 69, 44));
-        btn_Tambah.setText("Simpan");
-        btn_Tambah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
-        btn_Tambah.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_TambahMouseClicked(evt);
-            }
-        });
-        btn_Tambah.addActionListener(new java.awt.event.ActionListener() {
+        btn_Simpan.setBackground(new java.awt.Color(182, 69, 44));
+        btn_Simpan.setText("Simpan");
+        btn_Simpan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
+        btn_Simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_TambahActionPerformed(evt);
+                btn_SimpanActionPerformed(evt);
             }
         });
 
         btn_Barcode.setBackground(new java.awt.Color(182, 69, 44));
         btn_Barcode.setText("Barcode");
         btn_Barcode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
-        btn_Barcode.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_BarcodeMouseClicked(evt);
-            }
-        });
         btn_Barcode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_BarcodeActionPerformed(evt);
+            }
+        });
+
+        btn_Tambah.setBackground(new java.awt.Color(182, 69, 44));
+        btn_Tambah.setText("Tambah");
+        btn_Tambah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
+        btn_Tambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_TambahActionPerformed(evt);
+            }
+        });
+
+        btn_Edit2.setBackground(new java.awt.Color(182, 69, 44));
+        btn_Edit2.setText("Edit");
+        btn_Edit2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
+        btn_Edit2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Edit2ActionPerformed(evt);
+            }
+        });
+
+        btn_batal2.setBackground(new java.awt.Color(182, 69, 44));
+        btn_batal2.setText("Batal");
+        btn_batal2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
+        btn_batal2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_batal2ActionPerformed(evt);
             }
         });
 
@@ -427,10 +496,17 @@ public void clear() {
                         .addContainerGap())
                     .addComponent(jScrollPane3)
                     .addGroup(main_panelLayout.createSequentialGroup()
-                        .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(35, 35, 35)
                         .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(314, 314, 314)
+                        .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(btn_Simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,8 +519,11 @@ public void clear() {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_Simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
@@ -477,63 +556,58 @@ public void clear() {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1AncestorAdded
 
-    private void btn_TambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TambahMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_TambahMouseClicked
-
-    private void btn_TambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TambahActionPerformed
-        // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-
-        try {
-            Connection c = koneksi.getKoneksi();
-            int baris = jTable1.getRowCount();
-            String kodeBarang= tx_KodeBarang.getText();
-            double hargaBeli = Double.parseDouble(txHarga.getText());
-            int jumlah = Integer.parseInt(tx_Jumlah.getText());
-            String ukuran = (String) tx_Ukuran.getSelectedItem();
-            Double hargaJual = Double.parseDouble(txHarga1.getText());
-            String jenisBarang = (String) tx_JenisBarang.getSelectedItem();
-            String namaBarang = tx_NamaBarang.getText();
-            String noBarcode = tx_Nobarcode.getText();
-            String sql = "INSERT INTO barang (kode_barang, nama_barang, jenis_barang, ukuran, harga_beli, harga_jual, jumlah, no_barcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            java.sql.PreparedStatement p = c.prepareStatement(sql);
-
-            p.setString(1, kodeBarang);
-            p.setString(2, namaBarang);
-            p.setString(3, jenisBarang); // K
-            p.setString(4, ukuran); // Kolom 4: Ukuran
-            p.setDouble(5, hargaBeli); // Kolom 5: Harga Jual
-            p.setDouble(6, hargaJual); // Kolom 6: Jenis barang
-            p.setInt(7, jumlah); // Kolom 7: nama barang
-            p.setString(8, noBarcode);
-
-            p.executeUpdate();
-            p.close();
-
-            loadData();
-            clear();
+    private void btn_SimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SimpanActionPerformed
+        int rowCount = jTable1.getRowCount();
+        if(rowCount != 0) {
+            tambahData();
             JOptionPane.showMessageDialog(null, "Data Tersimpan");
-        }catch (SQLException e) {
-            System.out.println(e);
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+        } else {
+            JOptionPane.showMessageDialog(null, "Silahkan Inputkan Barang");
         }
-    }//GEN-LAST:event_btn_TambahActionPerformed
-
-    private void btn_BarcodeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_BarcodeMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_BarcodeMouseClicked
+                
+    }//GEN-LAST:event_btn_SimpanActionPerformed
 
     private void btn_BarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BarcodeActionPerformed
         // TODO add your handling code here:
-        String kodeBarang = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
-        main barcodeFrame = new main(kodeBarang);
+        String NoBarcode = jTable1.getValueAt(jTable1.getSelectedRow(), 7).toString();
+        main barcodeFrame = new main(NoBarcode);
         barcodeFrame.setVisible(true);
     }//GEN-LAST:event_btn_BarcodeActionPerformed
+
+    private void btn_TambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TambahActionPerformed
+        tambahDataSementara();
+        clear();
+    }//GEN-LAST:event_btn_TambahActionPerformed
+
+    private void btn_Edit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Edit2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Edit2ActionPerformed
+
+    private void btn_batal2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal2ActionPerformed
+        hapusDataSementara();
+    }//GEN-LAST:event_btn_batal2ActionPerformed
+
+    private void txHargaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txHargaKeyTyped
+        characterDigit(evt);
+    }//GEN-LAST:event_txHargaKeyTyped
+
+    private void txHarga1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txHarga1KeyTyped
+        characterDigit(evt);
+    }//GEN-LAST:event_txHarga1KeyTyped
+
+    private void tx_JumlahKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tx_JumlahKeyTyped
+        characterDigit(evt);
+    }//GEN-LAST:event_tx_JumlahKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Barcode;
+    private javax.swing.JButton btn_Edit2;
+    private javax.swing.JButton btn_Simpan;
     private javax.swing.JButton btn_Tambah;
+    private javax.swing.JButton btn_batal2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

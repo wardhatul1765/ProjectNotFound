@@ -70,7 +70,7 @@ public class Input_Pengguna extends javax.swing.JPanel {
     
 //    tambah data di database
     private void addData(String id_pengguna, String nama_pengguna, String username, String password, String telp_pengguna, String alamat_pengguna, String jabatan) {
-        String query = "INSERT INTO supplier VALUES(?,?,?,?,?,?,?)";
+        String query = "INSERT INTO pengguna VALUES(?,?,?,?,?,?,?)";
         try {
         PreparedStatement pst = connection.prepareStatement(query);
         pst.setString(1, id_pengguna);
@@ -255,8 +255,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tx_nama)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tx_nama, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tx_Nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
