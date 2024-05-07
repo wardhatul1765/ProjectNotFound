@@ -96,6 +96,23 @@ private void hapusDataSementara() {
 
 }
 
+private void editTable () {
+    int[] selectedRows = jTable1.getSelectedRows();
+    int selectedColumn = jTable1.getSelectedColumn();
+
+    if (selectedRows.length == 1 && selectedColumn != -1) {
+        for (int selectedRow : selectedRows) {
+            Object oldValue = jTable1.getValueAt(selectedRow, selectedColumn);
+            Object newValue = JOptionPane.showInputDialog(null, "Edit value:", oldValue);
+            if (newValue != null) {
+                model.setValueAt(newValue, selectedRow, selectedColumn);
+            }
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Silakan pilih satu baris dan satu kolom untuk diedit.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+}
+
 public void kosong(){
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     
@@ -582,7 +599,7 @@ public void clear() {
     }//GEN-LAST:event_btn_TambahActionPerformed
 
     private void btn_Edit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Edit2ActionPerformed
-        // TODO add your handling code here:
+        editTable();
     }//GEN-LAST:event_btn_Edit2ActionPerformed
 
     private void btn_batal2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal2ActionPerformed
