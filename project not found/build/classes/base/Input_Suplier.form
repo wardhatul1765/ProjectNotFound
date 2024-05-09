@@ -97,7 +97,7 @@
                           <Component id="jButton4" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                           <Component id="btn_Tambah" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -134,8 +134,8 @@
                       <Table columnCount="4" rowCount="0">
                         <Column editable="true" title="ID Supplier" type="java.lang.String"/>
                         <Column editable="true" title="Nama Supplier" type="java.lang.String"/>
-                        <Column editable="true" title="No Telepon" type="java.lang.String"/>
                         <Column editable="true" title="Alamat" type="java.lang.String"/>
+                        <Column editable="true" title="No Telepon" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

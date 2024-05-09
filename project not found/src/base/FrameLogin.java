@@ -176,7 +176,7 @@ public class FrameLogin extends javax.swing.JFrame {
             
             if(rs.next()) {
                 dispose();
-                menu_utama ksb = new menu_utama();
+                main.Main ksb = new main.Main();
                 ksb.show();
             } else {
                JOptionPane.showMessageDialog(null, "Username atau Password salah");

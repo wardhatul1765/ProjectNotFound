@@ -28,8 +28,8 @@ public class Input_Suplier extends javax.swing.JPanel {
     model.addRow(new Object[]{
         tx_Id.getText(),
         tx_Nama.getText(),
-         tx_Telp.getText(),
          tx_Alamat.getText(),
+          tx_Telp.getText()
     });
 }
  
@@ -88,9 +88,9 @@ public class Input_Suplier extends javax.swing.JPanel {
     private void tambahDataSementara() {
         String idSupplier = tx_Id.getText();
         String nama = tx_Nama.getText();
-        String noTlp = tx_Telp.getText();
         String alamat = tx_Alamat.getText();
-        model.addRow(new String[]{idSupplier, nama, noTlp, alamat});
+        String noTlp = tx_Telp.getText();
+        model.addRow(new String[]{idSupplier, nama, alamat,noTlp});
     }
 
 
@@ -139,7 +139,7 @@ public class Input_Suplier extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID Supplier", "Nama Supplier", "No Telepon", "Alamat"
+                "ID Supplier", "Nama Supplier", "Alamat", "No Telepon"
             }
         ) {
             Class[] types = new Class [] {
@@ -346,7 +346,7 @@ public class Input_Suplier extends javax.swing.JPanel {
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

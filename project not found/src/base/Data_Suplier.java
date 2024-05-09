@@ -134,7 +134,7 @@ public class Data_Suplier extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "ID Suplier", "Nama Suplier", "No Telepon", "Alamat"
+                "ID Suplier", "Nama Suplier", "Alamat", "No Telepon"
             }
         ));
         jScrollPane2.setViewportView(TableSupplier);
