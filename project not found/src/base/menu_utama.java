@@ -6,9 +6,14 @@ package base;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 /**
  *
@@ -19,12 +24,33 @@ public class menu_utama extends javax.swing.JFrame {
     /**
      * Creates new form menu_utama
      */
+    
+    private Timer timer;
     public menu_utama() {
         initComponents();
         this.setExtendedState(menu_utama.MAXIMIZED_BOTH);
         
         execute();
         
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showDayDateTime();
+            } 
+        });
+        
+        timer.start();
+        
+    }
+    
+    private void showDayDateTime() {
+        Calendar calendar = Calendar.getInstance();
+        Date now = new Date();
+        SimpleDateFormat formatHari = new SimpleDateFormat("EEEE", new Locale("in", "ID"));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String hari = formatHari.format(calendar.getTime());
+        String dateTime = dateFormat.format(now);
+        lb_tanggal.setText(hari+", "+dateTime);
     }
 
     /**
@@ -44,6 +70,8 @@ public class menu_utama extends javax.swing.JFrame {
         jPanelGradient1 = new jpanelgradient.jPanelGradient();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        lb_tanggal = new javax.swing.JLabel();
+        lb_Pengguna = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -103,6 +131,15 @@ public class menu_utama extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("NOT FOUND");
 
+        lb_tanggal.setBackground(new java.awt.Color(255, 255, 255));
+        lb_tanggal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lb_tanggal.setForeground(new java.awt.Color(255, 255, 255));
+        lb_tanggal.setText("Hari, Tanggal Waktu ");
+
+        lb_Pengguna.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lb_Pengguna.setForeground(new java.awt.Color(255, 255, 255));
+        lb_Pengguna.setText("Pengguna");
+
         javax.swing.GroupLayout jPanelGradient1Layout = new javax.swing.GroupLayout(jPanelGradient1);
         jPanelGradient1.setLayout(jPanelGradient1Layout);
         jPanelGradient1Layout.setHorizontalGroup(
@@ -110,18 +147,32 @@ public class menu_utama extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGradient1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 674, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 509, Short.MAX_VALUE)
+                .addGroup(jPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGradient1Layout.createSequentialGroup()
+                        .addComponent(lb_tanggal)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel1)
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGradient1Layout.createSequentialGroup()
+                        .addComponent(lb_Pengguna)
+                        .addContainerGap())))
         );
         jPanelGradient1Layout.setVerticalGroup(
             jPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGradient1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(jPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelGradient1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanelGradient1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanelGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(lb_tanggal))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lb_Pengguna)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanelGradient1, java.awt.BorderLayout.PAGE_START);
@@ -177,6 +228,8 @@ public class menu_utama extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private jpanelgradient.jPanelGradient jPanelGradient1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_Pengguna;
+    private javax.swing.JLabel lb_tanggal;
     private javax.swing.JPanel menu_sub;
     private javax.swing.JPanel pnl_content;
     private javax.swing.JPanel pnl_sidebar;
