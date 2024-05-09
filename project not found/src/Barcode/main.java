@@ -144,7 +144,7 @@ public class main extends javax.swing.JFrame {
             // Mengambil path file barcode dari br_data
     String fname = br_data.getText();
     // Membuat path lengkap menuju file barcode
-    String barcodePath = "C:\\Users\\KakaPatria\\OneDrive\\Documents\\GitHub\\ProjectNotFound\\project not found\\src\\Barcode\\" + fname + ".png";
+    String barcodePath = "D:\\Git\\Project\\ProjectNotFound\\project not found\\src\\Barcode" + fname + ".png";
     
     try {
         // Membaca file gambar barcode dari path

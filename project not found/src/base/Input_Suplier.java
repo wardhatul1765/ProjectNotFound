@@ -74,6 +74,23 @@ public class Input_Suplier extends javax.swing.JPanel {
             System.err.println(ex.getMessage());
         } 
     }
+    
+    private void editTable () {
+    int[] selectedRows = Table_suplier.getSelectedRows();
+    int selectedColumn = Table_suplier.getSelectedColumn();
+
+    if (selectedRows.length == 1 && selectedColumn != -1) {
+        for (int selectedRow : selectedRows) {
+            Object oldValue = Table_suplier.getValueAt(selectedRow, selectedColumn);
+            Object newValue = JOptionPane.showInputDialog(null, "Edit value:", oldValue);
+            if (newValue != null) {
+                model.setValueAt(newValue, selectedRow, selectedColumn);
+            }
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Silakan pilih satu baris dan satu kolom untuk diedit.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+}
 
 
     /**

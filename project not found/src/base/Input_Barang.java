@@ -239,7 +239,6 @@ public void clear() {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btn_Simpan = new javax.swing.JButton();
-        btn_Barcode = new javax.swing.JButton();
         btn_Tambah = new javax.swing.JButton();
         btn_Edit2 = new javax.swing.JButton();
         btn_batal2 = new javax.swing.JButton();
@@ -461,15 +460,6 @@ public void clear() {
             }
         });
 
-        btn_Barcode.setBackground(new java.awt.Color(182, 69, 44));
-        btn_Barcode.setText("Barcode");
-        btn_Barcode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
-        btn_Barcode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_BarcodeActionPerformed(evt);
-            }
-        });
-
         btn_Tambah.setBackground(new java.awt.Color(182, 69, 44));
         btn_Tambah.setText("Tambah");
         btn_Tambah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
@@ -513,9 +503,7 @@ public void clear() {
                         .addContainerGap())
                     .addComponent(jScrollPane3)
                     .addGroup(main_panelLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(314, 314, 314)
+                        .addGap(426, 426, 426)
                         .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
                         .addComponent(btn_Simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -537,7 +525,6 @@ public void clear() {
                 .addGap(12, 12, 12)
                 .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -586,13 +573,6 @@ public void clear() {
                 
     }//GEN-LAST:event_btn_SimpanActionPerformed
 
-    private void btn_BarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BarcodeActionPerformed
-        // TODO add your handling code here:
-        String NoBarcode = jTable1.getValueAt(jTable1.getSelectedRow(), 7).toString();
-        main barcodeFrame = new main(NoBarcode);
-        barcodeFrame.setVisible(true);
-    }//GEN-LAST:event_btn_BarcodeActionPerformed
-
     private void btn_TambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TambahActionPerformed
         tambahDataSementara();
         clear();
@@ -620,7 +600,6 @@ public void clear() {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Barcode;
     private javax.swing.JButton btn_Edit2;
     private javax.swing.JButton btn_Simpan;
     private javax.swing.JButton btn_Tambah;
