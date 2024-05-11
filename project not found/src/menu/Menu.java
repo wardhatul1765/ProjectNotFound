@@ -135,7 +135,7 @@ public class Menu extends JComponent{
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2D = (Graphics2D) g.create();
-        g2D.setColor(new Color(128,0,0));
+        g2D.setColor(new Color(51, 51, 51));
         g2D.fill(new Rectangle(0, 0, getWidth(), getHeight()));
         super.paintComponent(g); 
     }
