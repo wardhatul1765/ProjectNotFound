@@ -32,9 +32,9 @@ public class Menu extends JComponent{
         {"Dashboard"},
         {"Master", "Input Barang", "Input Suplier", "Input Pengguna"},
         {"Data", "Data Barang", "Data Suplier", "Data Pengguna"},
+        {"Promo"},
         {"Transaksi", "Pembelian", "Penjualan"},
-        {"Laporan", "Data Barang Masuk", "Data Barang Keluar"},
-        {"Logout"}
+        {"Laporan", "Data Barang Masuk", "Data Barang Keluar","Keuangan"},
     };
     
     public Menu() {

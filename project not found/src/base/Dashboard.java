@@ -29,7 +29,7 @@ public class Dashboard extends javax.swing.JPanel {
             chart.addData(new ModelChart("January", new double[] {500, 200, 80, 89}));
             chart.addData(new ModelChart("February", new double[] {600, 750, 90, 150}));
             chart.addData(new ModelChart("March", new double[] {200, 350, 460, 900}));
-            chart.addData(new ModelChart("April", new double[] {500, 200, 80, 89}));
+            chart.addData(new ModelChart("April", new double[] {500, 200, 80, 89})); 
             chart.addData(new ModelChart("May", new double[] {300, 150, 200, 100}));
             //chart.addData(new ModelChart("June", new double[] {250, 300, 100, 250}));
             //chart.addData(new ModelChart("July", new double[] {400, 200, 300, 150}));
