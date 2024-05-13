@@ -176,7 +176,7 @@ public class FrameLogin extends javax.swing.JFrame {
             
             if(rs.next()) {
                 dispose();
-                menu_utama ksb = new menu_utama();
+                main.Main ksb = new main.Main();
                 ksb.show();
             } else {
                JOptionPane.showMessageDialog(null, "Username atau Password salah");
@@ -215,6 +215,7 @@ public class FrameLogin extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
