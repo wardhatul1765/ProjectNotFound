@@ -8,6 +8,11 @@ import com.barcodelib.barcode.Linear;
 import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+
 
 /**
  *
@@ -15,9 +20,36 @@ import javax.swing.ImageIcon;
  */
 public class main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form main
-     */
+    
+    private void printBarcode(File file) {
+    // Ambil daftar layanan cetak yang tersedia
+    PrintService[] printServices = PrinterJob.lookupPrintServices();
+
+    // Cari printer yang sesuai
+    PrintService printer = null;
+    for (PrintService printService : printServices) {
+        if (printService.getName().equalsIgnoreCase("Nama_Printer_Anda")) {
+            printer = printService;
+            break;
+        }
+    }
+
+    if (printer != null) {
+        try {
+            // Persiapkan pekerjaan pencetakan
+            PrinterJob job = PrinterJob.getPrinterJob();
+            job.setPrintService(printer);
+            job.setPrintable(new PrintableBarcode(new ImageIcon(file.getAbsolutePath())));
+            job.print();
+        } catch (PrinterException e) {
+            e.printStackTrace();
+        }
+    } else {
+        System.out.println("Printer tidak ditemukan.");
+    }
+}
+    
+    
     public main() {
         initComponents();
         
@@ -41,6 +73,7 @@ public class main extends javax.swing.JFrame {
         br_data = new javax.swing.JTextField();
         btn_read = new javax.swing.JButton();
         tx_image = new javax.swing.JLabel();
+        btn_print = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,6 +110,13 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        btn_print.setText("Print");
+        btn_print.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_printActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,10 +126,16 @@ public class main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_read, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(br_data, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_write, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tx_image, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tx_image, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(br_data, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_write, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(btn_print)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -101,8 +147,13 @@ public class main extends javax.swing.JFrame {
                     .addComponent(btn_write, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btn_read, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(tx_image, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(tx_image, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(btn_print)))
                 .addGap(27, 27, 27))
         );
 
@@ -159,6 +210,31 @@ public class main extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_btn_readActionPerformed
 
+    private void btn_printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_printActionPerformed
+String fname = br_data.getText();
+    // Membuat path lengkap menuju file barcode
+    String barcodePath = "D:\\Git\\Project\\ProjectNotFound\\project not found\\src\\Barcode" + fname + ".png";
+    
+    try {
+        // Membaca file gambar barcode dari path
+        File file = new File(barcodePath);
+        if (file.exists()) {
+            // Membuat objek ImageIcon dari file gambar barcode
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(tx_image.getWidth(), tx_image.getHeight(), Image.SCALE_DEFAULT));
+            // Menampilkan gambar barcode pada tx_image
+            tx_image.setIcon(imageIcon);
+            
+            // Panggil metode untuk mencetak barcode
+            printBarcode(file);
+        } else {
+            System.out.println("File barcode tidak ditemukan.");
+        }
+    } catch (Exception e) {
+        // Menampilkan pesan error jika terjadi kesalahan
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_btn_printActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -196,6 +272,7 @@ public class main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField br_data;
+    private javax.swing.JButton btn_print;
     private javax.swing.JButton btn_read;
     private javax.swing.JButton btn_write;
     private javax.swing.JLabel tx_image;
