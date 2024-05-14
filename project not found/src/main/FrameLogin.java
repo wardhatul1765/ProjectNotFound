@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package base;
+package main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -174,15 +174,27 @@ public class FrameLogin extends javax.swing.JFrame {
             
             ResultSet rs = stm.executeQuery(sql);
             
-            if(rs.next()) {
-                dispose();
-                main.Main ksb = new main.Main();
-                ksb.show();
+           if (rs.next()) {
+           // Menutup frame login
+             String nama_pengguna = rs.getString("nama_pengguna");
+             String jabatan = rs.getString("jabatan");
+             
+              JOptionPane.showMessageDialog(null, "Selamat datang, " + nama_pengguna + " " + jabatan);
+              dispose();
+
+            // Membuka frame Main dengan mengirimkan username dan jabatan
+           Main ksb = new Main(nama_pengguna, jabatan);
+            ksb.show(); // Menampilkan frame utama
+
+            // Tampilkan pesan selamat datang
+             
             } else {
                JOptionPane.showMessageDialog(null, "Username atau Password salah");
                txt_user.setText("");
                txt_pass.setText("");
             }
+            
+            
 //            c.close();
         } catch(Exception e){
         System.out.println(e);

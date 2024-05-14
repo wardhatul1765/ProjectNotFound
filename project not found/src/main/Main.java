@@ -27,6 +27,9 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 import menu.Event;
 import java.awt.Point;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 
 /**
@@ -39,10 +42,28 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     private Timer timer;
+    private String Nama;
+    private String jabatan;
+    private String statusAkses;
     
-    public Main() {
+    public Main(String Nama, String jabatan) {
         initComponents();
+        
+         this.Nama = Nama;
+         this.jabatan = jabatan;
+        
+        lb_namaJabatan.setText("Selamat datang " + Nama + " , " + jabatan);
+        lb_Username.setText(Nama);
+        lb_Jabatan.setText(jabatan);
+        
+        if (jabatan.equals("Owner")) {
+        statusAkses = "Owner";
+    } else {
+        statusAkses = "karyawan";
+    }
         Action();
+        
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         
                  timer = new Timer(1000, new ActionListener() { 
             @Override
@@ -85,6 +106,7 @@ public class Main extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lb_tanggal = new javax.swing.JLabel();
         btn_setting = new javax.swing.JButton();
+        lb_namaJabatan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -97,7 +119,7 @@ public class Main extends javax.swing.JFrame {
         lb_Username.setBackground(new java.awt.Color(255, 255, 255));
         lb_Username.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lb_Username.setForeground(new java.awt.Color(255, 255, 255));
-        lb_Username.setText("Username");
+        lb_Username.setText("Nama");
 
         lb_Jabatan.setBackground(new java.awt.Color(255, 255, 255));
         lb_Jabatan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -115,7 +137,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_Username)
                     .addComponent(lb_Jabatan))
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,12 +202,19 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        lb_namaJabatan.setBackground(new java.awt.Color(255, 255, 255));
+        lb_namaJabatan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lb_namaJabatan.setForeground(new java.awt.Color(255, 255, 255));
+        lb_namaJabatan.setText("Selamat Datang");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(178, 178, 178)
+                .addComponent(lb_namaJabatan)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lb_tanggal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_setting))
@@ -196,7 +225,9 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_setting)
-                    .addComponent(lb_tanggal))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lb_tanggal)
+                        .addComponent(lb_namaJabatan)))
                 .addContainerGap())
         );
 
@@ -229,7 +260,9 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_settingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_settingActionPerformed
-    Settings.Menu menu = new Settings.Menu(this, true);
+   Settings.Menu menu = new Settings.Menu (this, true, this);
+    
+    //menampilkan JDialog dibawah button settings
     Point p = btn_setting.getLocationOnScreen();
     int x = p.x + btn_setting.getWidth() - menu.getWidth();
     int y =  p.y + btn_setting.getHeight();
@@ -268,7 +301,11 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+             //   new Main().setVisible(true);
+            // Menjadi seperti ini
+            String Nama = "your_username"; // Ganti dengan username yang sesuai
+            String jabatan = "your_jabatan"; // Ganti dengan jabatan yang sesuai
+            new Main(Nama, jabatan).setVisible(true);
             }
         });
     }
@@ -280,6 +317,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lb_Jabatan;
     private javax.swing.JLabel lb_Username;
+    private javax.swing.JLabel lb_namaJabatan;
     private javax.swing.JLabel lb_tanggal;
     private menu.Menu menu1;
     private javax.swing.JPanel panel;
@@ -287,12 +325,30 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel panelUtama;
     // End of variables declaration//GEN-END:variables
 
+//Akses
 private void Action() {
     menu1.setEvent(new Event() {
         @Override
-        public void selectedMenu(int index, int subIndex) {
+      public void selectedMenu(int index, int subIndex) {
             System.out.println(index + " , "+ subIndex);
-           if(index == 0 && subIndex==0) {
+            if (statusAkses.equals("Owner")) {
+                // Akses penuh untuk pemilik
+                showMenu(index, subIndex);
+            } else {
+                // Batasi akses untuk karyawan
+                if (!((index == 1 && subIndex == 1) || (index == 1 && subIndex == 2) || (index == 1 && subIndex == 3))) {
+                    showMenu(index, subIndex);
+                } else {
+                    // Tampilkan pesan bahwa karyawan tidak diizinkan mengakses fitur tersebut
+                    JOptionPane.showMessageDialog(Main.this, "Maaf, Anda tidak diizinkan mengakses fitur ini.", "Akses Ditolak", JOptionPane.WARNING_MESSAGE);
+                    }
+           }
+        }
+    });
+} 
+
+private void showMenu(int index, int subIndex) {
+     if(index == 0 && subIndex==0) {
                changePanel(new Dashboard());
             } else if (index == 1 && subIndex == 1) {
                 changePanel(new Input_Barang());
@@ -318,11 +374,8 @@ private void Action() {
                 changePanel(new Barang_Keluar());
             } else if(index == 5 && subIndex == 3)  {
                 changePanel(new Keuangan());
-              
-           }
-        }
-    });
-} 
+    }
+}
 
 private void changePanel(JComponent pn) {
     panelUtama.removeAll();
@@ -333,6 +386,11 @@ private void changePanel(JComponent pn) {
 
     public Object getFrame() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
+        public JPanel getpanelUtama() {
+        return panelUtama;
     }
 
 }
