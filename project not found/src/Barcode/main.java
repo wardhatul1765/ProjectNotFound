@@ -6,8 +6,16 @@ package Barcode;
 
 import com.barcodelib.barcode.Linear;
 import java.awt.Image;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.awt.print.Printable;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.Graphics;
 import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,9 +31,9 @@ public class main extends javax.swing.JFrame {
         
     }
 
-    public main(String kodeBarang) {
+    public main(String noBarcode) {
        initComponents();
-    br_data.setText(kodeBarang);
+    br_data.setText(noBarcode);
     }
 
     /**
@@ -39,7 +47,6 @@ public class main extends javax.swing.JFrame {
 
         btn_write = new javax.swing.JButton();
         br_data = new javax.swing.JTextField();
-        btn_read = new javax.swing.JButton();
         tx_image = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -55,15 +62,6 @@ public class main extends javax.swing.JFrame {
         br_data.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 br_dataActionPerformed(evt);
-            }
-        });
-
-        btn_read.setText("import barcode");
-        btn_read.setMaximumSize(new java.awt.Dimension(110, 27));
-        btn_read.setMinimumSize(new java.awt.Dimension(110, 27));
-        btn_read.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_readActionPerformed(evt);
             }
         });
 
@@ -84,7 +82,6 @@ public class main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_read, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(br_data, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -99,10 +96,8 @@ public class main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(br_data, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_write, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(btn_read, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(tx_image, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tx_image, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
 
@@ -112,25 +107,62 @@ public class main extends javax.swing.JFrame {
 
     private void btn_writeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_writeActionPerformed
         // TODO add your handling code here:
-        
-        try {
-            
+      try {
             Linear barcode = new Linear();
             barcode.setType(Linear.CODE128B);
             barcode.setData(br_data.getText());
             barcode.setI(11.0f);
-            
-            String fname = br_data.getText();
-            
-            barcode.renderBarcode("C:\\Users\\KakaPatria\\OneDrive\\Documents\\GitHub\\ProjectNotFound\\project not found\\src\\Barcode\\" + fname +".png");
 
-            
-        }catch (Exception e) {
-            
+            String fname = br_data.getText();
+            String filePath = "C:\\Users\\KakaPatria\\OneDrive\\Documents\\GitHub\\barcode\\" + fname + ".png";
+            barcode.renderBarcode(filePath);
+
+            // Display the generated barcode
+            File file = new File(filePath);
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(tx_image.getWidth(), tx_image.getHeight(), Image.SCALE_DEFAULT));
+            tx_image.setIcon(imageIcon);
+
+            // Print the barcode
+            printBarcode(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error generating or printing barcode: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+           
     }//GEN-LAST:event_btn_writeActionPerformed
 
+    
+      private void printBarcode(File file) {
+        PrinterJob printerJob = PrinterJob.getPrinterJob();
+        printerJob.setPrintable(new Printable() {
+            public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
+                if (page > 0) {
+                    return NO_SUCH_PAGE;
+                }
+                
+                try {
+                    Image barcodeImage = ImageIO.read(file);
+                    g.drawImage(barcodeImage, 0, 0, (int) pf.getImageableWidth(), (int) pf.getImageableHeight(), null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return NO_SUCH_PAGE;
+                }
+                
+                return PAGE_EXISTS;
+            }
+        });
+
+        boolean doPrint = printerJob.printDialog();
+        if (doPrint) {
+            try {
+                printerJob.print();
+            } catch (PrinterException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error printing barcode: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+      
     private void br_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_br_dataActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_br_dataActionPerformed
@@ -138,26 +170,6 @@ public class main extends javax.swing.JFrame {
     private void tx_imageAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tx_imageAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_tx_imageAncestorAdded
-
-    private void btn_readActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_readActionPerformed
-        // TODO add your handling code here:
-            // Mengambil path file barcode dari br_data
-    String fname = br_data.getText();
-    // Membuat path lengkap menuju file barcode
-    String barcodePath = "C:\\Users\\KakaPatria\\OneDrive\\Documents\\GitHub\\ProjectNotFound\\project not found\\src\\Barcode\\" + fname + ".png";
-    
-    try {
-        // Membaca file gambar barcode dari path
-        File file = new File(barcodePath);
-        // Membuat objek ImageIcon dari file gambar barcode
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(tx_image.getWidth(), tx_image.getHeight(), Image.SCALE_DEFAULT));
-        // Menampilkan gambar barcode pada tx_image
-        tx_image.setIcon(imageIcon);
-    } catch (Exception e) {
-        // Menampilkan pesan error jika terjadi kesalahan
-        e.printStackTrace();
-    }
-    }//GEN-LAST:event_btn_readActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,7 +208,6 @@ public class main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField br_data;
-    private javax.swing.JButton btn_read;
     private javax.swing.JButton btn_write;
     private javax.swing.JLabel tx_image;
     // End of variables declaration//GEN-END:variables

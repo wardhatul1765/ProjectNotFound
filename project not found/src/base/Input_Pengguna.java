@@ -151,7 +151,7 @@ public class Input_Pengguna extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setText("Jabatan");
 
-        tx_nomor.setBackground(new java.awt.Color(182, 69, 44));
+        tx_nomor.setBackground(new java.awt.Color(204, 204, 204));
         tx_nomor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tx_nomorActionPerformed(evt);
@@ -164,16 +164,16 @@ public class Input_Pengguna extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel7.setText("No Telpon");
 
-        tx_Nama.setBackground(new java.awt.Color(182, 69, 44));
+        tx_Nama.setBackground(new java.awt.Color(204, 204, 204));
         tx_Nama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tx_NamaActionPerformed(evt);
             }
         });
 
-        tx_password.setBackground(new java.awt.Color(182, 69, 44));
+        tx_password.setBackground(new java.awt.Color(204, 204, 204));
 
-        tx_alamat.setBackground(new java.awt.Color(182, 69, 44));
+        tx_alamat.setBackground(new java.awt.Color(204, 204, 204));
         tx_alamat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tx_alamatActionPerformed(evt);
@@ -186,15 +186,15 @@ public class Input_Pengguna extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setText("Id Pengguna");
 
-        tx_Id.setBackground(new java.awt.Color(182, 69, 44));
+        tx_Id.setBackground(new java.awt.Color(204, 204, 204));
 
-        tx_username.setBackground(new java.awt.Color(182, 69, 44));
+        tx_username.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setText("Password");
 
-        tx_jabatan.setBackground(new java.awt.Color(182, 69, 44));
-        tx_jabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Owner", "Admin", "Kasir" }));
+        tx_jabatan.setBackground(new java.awt.Color(204, 204, 204));
+        tx_jabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Owner", "karyawan", " " }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -224,7 +224,7 @@ public class Input_Pengguna extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tx_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,8 +257,7 @@ public class Input_Pengguna extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tx_nama, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel10)))
+                            .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tx_Nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32))))
@@ -270,7 +269,7 @@ public class Input_Pengguna extends javax.swing.JPanel {
         jScrollPane3.setBorder(null);
         jScrollPane3.setForeground(new java.awt.Color(255, 255, 255));
 
-        Table_pengguna.setBackground(new java.awt.Color(221, 197, 162));
+        Table_pengguna.setBackground(new java.awt.Color(204, 204, 204));
         Table_pengguna.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Table_pengguna.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -296,7 +295,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(Table_pengguna);
 
-        btn_simpan.setBackground(new java.awt.Color(182, 69, 44));
+        btn_simpan.setBackground(new java.awt.Color(7, 29, 54));
+        btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/SAVE.png"))); // NOI18N
         btn_simpan.setText("Simpan");
         btn_simpan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_simpan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -310,7 +310,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
             }
         });
 
-        btn_tmbhpengguna.setBackground(new java.awt.Color(182, 69, 44));
+        btn_tmbhpengguna.setBackground(new java.awt.Color(7, 29, 54));
+        btn_tmbhpengguna.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/ADD.png"))); // NOI18N
         btn_tmbhpengguna.setText("Tambah");
         btn_tmbhpengguna.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_tmbhpengguna.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -324,7 +325,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
             }
         });
 
-        btn_Edit2.setBackground(new java.awt.Color(182, 69, 44));
+        btn_Edit2.setBackground(new java.awt.Color(7, 29, 54));
+        btn_Edit2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/EDIT.png"))); // NOI18N
         btn_Edit2.setText("Edit");
         btn_Edit2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_Edit2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -338,7 +340,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
             }
         });
 
-        btn_batal2.setBackground(new java.awt.Color(182, 69, 44));
+        btn_batal2.setBackground(new java.awt.Color(7, 29, 54));
+        btn_batal2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/cancel.png"))); // NOI18N
         btn_batal2.setText("Batal");
         btn_batal2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_batal2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -353,25 +356,20 @@ public class Input_Pengguna extends javax.swing.JPanel {
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(main_panelLayout.createSequentialGroup()
-                        .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(main_panelLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addComponent(jScrollPane3)))
+                .addComponent(jLabel1)
+                .addContainerGap(581, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_panelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_tmbhpengguna, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addComponent(btn_tmbhpengguna)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

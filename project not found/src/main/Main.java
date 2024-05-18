@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -17,6 +17,7 @@ import base.Input_Suplier;
 import base.Keuangan;
 import base.Pembelian;
 import base.Penjualan;
+import base.Promo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -111,10 +112,10 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(7, 29, 54));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/iconUser.png"))); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/user.png"))); // NOI18N
 
         lb_Username.setBackground(new java.awt.Color(255, 255, 255));
         lb_Username.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -122,7 +123,6 @@ public class Main extends javax.swing.JFrame {
         lb_Username.setText("Nama");
 
         lb_Jabatan.setBackground(new java.awt.Color(255, 255, 255));
-        lb_Jabatan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lb_Jabatan.setForeground(new java.awt.Color(255, 255, 255));
         lb_Jabatan.setText("Jabatan");
 
@@ -131,13 +131,13 @@ public class Main extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_Username)
                     .addComponent(lb_Jabatan))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,7 +149,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(lb_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lb_Jabatan)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
@@ -186,7 +186,7 @@ public class Main extends javax.swing.JFrame {
 
         panelUtama.add(panel, "card2");
 
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel2.setBackground(new java.awt.Color(7, 29, 54));
 
         lb_tanggal.setBackground(new java.awt.Color(255, 255, 255));
         lb_tanggal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -212,7 +212,7 @@ public class Main extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(178, 178, 178)
+                .addGap(182, 182, 182)
                 .addComponent(lb_namaJabatan)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lb_tanggal)
@@ -222,7 +222,7 @@ public class Main extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_setting)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -362,8 +362,8 @@ private void showMenu(int index, int subIndex) {
                 changePanel(new Data_Suplier());
             } else if (index == 2 && subIndex == 3) {
                 changePanel(new Data_Pengguna());
-            //} else if (index == 3 && subIndex == 0) {
-          //      changePanel(new Promo());
+            } else if (index == 3 && subIndex == 0) {
+                changePanel(new Promo());
             } else if(index == 4 && subIndex == 1)  {
                 changePanel(new Pembelian());
             } else if(index == 4 && subIndex == 2)  {

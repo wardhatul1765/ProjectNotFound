@@ -3,6 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Settings;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import koneksi.Koneksi;
 
 /**
  *
@@ -17,6 +24,7 @@ public class ChangePassword extends javax.swing.JPanel {
         initComponents();
     }
 
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -150,9 +158,47 @@ public class ChangePassword extends javax.swing.JPanel {
 
     private void btn_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_submitActionPerformed
         // TODO add your handling code here:
-        String passwordLama = txt_passLama.getText();
-        String passwordBaru = txt_passBaru.getText();
-        String konfirmasiPasswordBaru = txt_passKonfir.getText();
+      String passwordLama = txt_passLama.getText();
+    String passwordBaru = txt_passBaru.getText();
+    String konfirmasiPasswordBaru = txt_passKonfir.getText();
+
+    // Validasi input
+    if (passwordBaru.equals(konfirmasiPasswordBaru)) {
+        try {
+            // Cek password lama
+            Connection conn = Koneksi.getKoneksi();
+            String checkPasswordQuery = "SELECT password FROM pengguna WHERE id_pengguna = ?";
+            PreparedStatement checkPasswordStmt = conn.prepareStatement(checkPasswordQuery);
+            checkPasswordStmt.setInt(1, 1); // Asumsikan user_id = 1
+            ResultSet rs = checkPasswordStmt.executeQuery();
+            
+            if (rs.next()) {
+                String currentPassword = rs.getString("password");
+                if (currentPassword.equals(passwordLama)) {
+                    // Password lama cocok, update password baru
+                    String updatePasswordQuery = "UPDATE pengguna SET password = ? WHERE id_pengguna = ?";
+                    PreparedStatement updatePasswordStmt = conn.prepareStatement(updatePasswordQuery);
+                    updatePasswordStmt.setString(1, passwordBaru);
+                    updatePasswordStmt.setInt(2, 1); // Asumsikan user_id = 1
+                    int rowsUpdated = updatePasswordStmt.executeUpdate();
+
+                    if (rowsUpdated > 0) {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Password berhasil diubah.");
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengubah password.");
+                    }
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Password lama salah.");
+                }
+            }
+
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Password baru dan konfirmasi tidak cocok.");
+    }
         
     }//GEN-LAST:event_btn_submitActionPerformed
 
