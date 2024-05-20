@@ -80,14 +80,15 @@ public class main extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(br_data, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_write, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tx_image, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(br_data, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_write, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tx_image, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,8 +98,8 @@ public class main extends javax.swing.JFrame {
                     .addComponent(br_data, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_write, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tx_image, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addComponent(tx_image, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -134,33 +135,41 @@ public class main extends javax.swing.JFrame {
     
       private void printBarcode(File file) {
         PrinterJob printerJob = PrinterJob.getPrinterJob();
-        printerJob.setPrintable(new Printable() {
-            public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
-                if (page > 0) {
-                    return NO_SUCH_PAGE;
-                }
-                
-                try {
-                    Image barcodeImage = ImageIO.read(file);
-                    g.drawImage(barcodeImage, 0, 0, (int) pf.getImageableWidth(), (int) pf.getImageableHeight(), null);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return NO_SUCH_PAGE;
-                }
-                
-                return PAGE_EXISTS;
+    printerJob.setPrintable(new Printable() {
+        public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
+            if (page > 0) {
+                return NO_SUCH_PAGE;
             }
-        });
-
-        boolean doPrint = printerJob.printDialog();
-        if (doPrint) {
+            
             try {
-                printerJob.print();
-            } catch (PrinterException e) {
+                Image barcodeImage = ImageIO.read(file);
+                
+                // Scale image to fit within the printable area of the paper
+                double scaleX = pf.getImageableWidth() / barcodeImage.getWidth(null);
+                double scaleY = pf.getImageableHeight() / barcodeImage.getHeight(null);
+                double scale = Math.min(scaleX, scaleY);
+                int width = (int) (barcodeImage.getWidth(null) * scale);
+                int height = (int) (barcodeImage.getHeight(null) * scale);
+                
+                g.drawImage(barcodeImage, 4800, 21000, width, height, null);
+            } catch (Exception e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error printing barcode: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return NO_SUCH_PAGE;
             }
+            
+            return PAGE_EXISTS;
         }
+    });
+
+    boolean doPrint = printerJob.printDialog();
+    if (doPrint) {
+        try {
+            printerJob.print();
+        } catch (PrinterException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error printing barcode: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     }
       
     private void br_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_br_dataActionPerformed
