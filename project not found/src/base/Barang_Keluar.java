@@ -4,19 +4,101 @@
  */
 package base;
 
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import koneksi.Koneksi;
+
 /**
  *
  * @author iannnnn
  */
 public class Barang_Keluar extends javax.swing.JPanel {
+  private DefaultTableModel model;
+    private Koneksi koneksi = new Koneksi();
+    private TableRowSorter<DefaultTableModel> rowSorter;
+    public void loadBarangKeluar(){
+    model.getDataVector().removeAllElements();
+    model.fireTableDataChanged();
+    
+    try{
+        Connection c = koneksi.getKoneksi();
+        java.sql.Statement s = c.createStatement();
+        
+        String sql = "SELECT * FROM detail_penjualan";
+        ResultSet r = s.executeQuery(sql);
+        
+        while(r.next()){
+            Object[] obj = new Object[8];
+            obj [0] = r.getString("no_penjualan");
+            obj [1] = r.getString("nama_barang");
+            obj [2] = r.getString("jumlah");
+            
+            model.addRow(obj);
+        }
+        r.close();
+        s.close();
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
 
+    /**
+     * Creates new form Data_Barang
+     */
+ 
     /**
      * Creates new form Barang_Keluar
      */
     public Barang_Keluar() {
         initComponents();
+        
+           model = new DefaultTableModel();
+        rowSorter = new TableRowSorter<>(model);
+        TableBarangKeluar.setModel(model);
+        TableBarangKeluar.setRowSorter(rowSorter);
+        //InputBarang
+        model.addColumn("no_penjualan");
+        model.addColumn("Nama Barang");
+        model.addColumn("Jumlah");
+        TableBarangKeluar.getTableHeader().setBackground(new Color(0,40,85));
+        TableBarangKeluar.getTableHeader().setForeground(Color.WHITE);
+                loadBarangKeluar();
+        cariBrgKeluar();
     }
+    
+         private void cariBrgKeluar() {
+        tx_BarangKeluar.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                init();
+            }
 
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                 init();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+    }
+    
+    private void init() {
+        String text = tx_BarangKeluar.getText();
+        if(text.length() == 0) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 0, 1));
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,13 +110,29 @@ public class Barang_Keluar extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TableBarangKeluar = new javax.swing.JTable();
+        tx_BarangKeluar = new javax.swing.JTextField();
 
         setLayout(new java.awt.CardLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("Data Barang Keluar");
+
+        TableBarangKeluar.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "no_penjualan", "nama barang", "jumlah"
+            }
+        ));
+        jScrollPane1.setViewportView(TableBarangKeluar);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -43,14 +141,20 @@ public class Barang_Keluar extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tx_BarangKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(368, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(tx_BarangKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
         );
 
         add(jPanel1, "card2");
@@ -58,7 +162,10 @@ public class Barang_Keluar extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TableBarangKeluar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField tx_BarangKeluar;
     // End of variables declaration//GEN-END:variables
 }

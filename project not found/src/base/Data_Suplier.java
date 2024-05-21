@@ -3,6 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package base;
+import koneksi.Koneksi;
+import Barcode.main;
+import java.awt.Color;
+import java.awt.Font;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,12 +27,85 @@ import java.awt.Font;
  * @author iannnnn
  */
 public class Data_Suplier extends javax.swing.JPanel {
+    private DefaultTableModel model;
+    private Koneksi koneksi = new Koneksi();
+    private TableRowSorter<DefaultTableModel> rowSorter;
+    public void loadDataSupplier(){
+    model.getDataVector().removeAllElements();
+    model.fireTableDataChanged();
+    TableSupplier.getTableHeader().setBackground(new Color(0,40,85));
+    TableSupplier.getTableHeader().setForeground(Color.WHITE);
+    
+    try{
+        Connection c = koneksi.getKoneksi();
+        java.sql.Statement s = c.createStatement();
+        
+        String sql = "SELECT * FROM supplier";
+        ResultSet r = s.executeQuery(sql);
+        
+        while(r.next()){
+            Object[] obj = new Object[4];
+            obj [0] = r.getString("id_supplier");
+            obj [1] = r.getString("nama_supplier");
+            obj [2] = r.getString("alamat_supplier");
+            obj [3] = r.getString("telp_supplier");
+            
+            model.addRow(obj);
+        }
+        r.close();
+        s.close();
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
 
     /**
      * Creates new form Data_Suplier
      */
     public Data_Suplier() {
         initComponents();
+        
+        model = new DefaultTableModel();
+        rowSorter = new TableRowSorter<>(model);
+        TableSupplier.setModel(model);
+        TableSupplier.setRowSorter(rowSorter);
+        //InputBarang
+        model.addColumn("ID Supplier");
+        model.addColumn("Nama Supplier");
+        model.addColumn("Alamat");
+        model.addColumn("No Telepon");
+        TableSupplier.getTableHeader().setBackground(new Color(0,40,85));
+        TableSupplier.getTableHeader().setForeground(Color.WHITE);
+        loadDataSupplier();
+        cariDataSupplier();
+    }
+    
+    private void cariDataSupplier() {
+        jTextField1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                init();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                 init();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+    }
+    
+    private void init() {
+        String text = jTextField1.getText();
+        if(text.length() == 0) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 0, 1));
+        }
     }
 
     /**
@@ -31,16 +119,9 @@ public class Data_Suplier extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        tx_Id = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        tx_namaSupplier = new javax.swing.JTextField();
-        tx_Telp = new javax.swing.JTextField();
-        tx_Alamat = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TableSupplier = new javax.swing.JTable();
+        jTextField1 = new javax.swing.JTextField();
 
         setLayout(new java.awt.CardLayout());
 
@@ -49,40 +130,8 @@ public class Data_Suplier extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("Data Suplier");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setText("Id");
-
-        tx_Id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tx_IdActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setText("Nama supplier");
-
-        tx_namaSupplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tx_namaSupplierActionPerformed(evt);
-            }
-        });
-
-        tx_Telp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tx_TelpActionPerformed(evt);
-            }
-        });
-
-        tx_Alamat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tx_AlamatActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setText("Alamat");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TableSupplier.setBackground(new java.awt.Color(204, 204, 204));
+        TableSupplier.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -90,114 +139,54 @@ public class Data_Suplier extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Id", "Nama Suplier", "Telp", "Alamat"
+                "ID Suplier", "Nama Suplier", "Alamat", "No Telepon"
             }
         ));
-        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTable1AncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+        jScrollPane2.setViewportView(TableSupplier);
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setText("Telp");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(tx_namaSupplier, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(tx_Id, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel3))
-                                .addGap(26, 26, 26)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(tx_Telp, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tx_Alamat, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))
-                                .addGap(0, 129, Short.MAX_VALUE)))
-                        .addGap(79, 79, 79))))
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
+            .addComponent(jScrollPane2)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tx_Id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tx_Telp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tx_namaSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tx_Alamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                .addGap(32, 32, 32))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         add(jPanel1, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tx_IdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_IdActionPerformed
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tx_IdActionPerformed
-
-    private void tx_namaSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_namaSupplierActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tx_namaSupplierActionPerformed
-
-    private void tx_TelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_TelpActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tx_TelpActionPerformed
-
-    private void tx_AlamatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_AlamatActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tx_AlamatActionPerformed
-
-    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1AncestorAdded
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TableSupplier;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    public static javax.swing.JTextField tx_Alamat;
-    public static javax.swing.JTextField tx_Id;
-    public static javax.swing.JTextField tx_Telp;
-    public static javax.swing.JTextField tx_namaSupplier;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

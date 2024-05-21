@@ -4,19 +4,66 @@
  */
 package base;
 
+import com.raven.chart.ModelChart;
+import java.awt.Color;
+
 /**
  *
  * @author user
  */
 public class Dashboard extends javax.swing.JPanel {
+    
 
     /**
      * Creates new form Dashboard
      */
     public Dashboard() {
         initComponents();
+        init();
+        chart.setBackground(new Color(255, 255, 255));
     }
 
+    private void init() {
+            chart.addLegend("Omzet", new Color(12, 84, 175),new Color(0, 108, 247));
+            chart.addLegend("Pengeluaran", new Color(54, 4, 143),new Color(104, 49, 200));
+            chart.addLegend("Keuntungan", new Color(5, 125, 0),new Color(95, 209, 69));
+            //chart.addLegend("Cost", new Color(186, 37, 37),new Color(241, 100, 120));
+            chart.addData(new ModelChart("January", new double[] {500, 200, 80, 89}));
+            chart.addData(new ModelChart("February", new double[] {600, 750, 90, 150}));
+            chart.addData(new ModelChart("March", new double[] {200, 350, 460, 900}));
+            chart.addData(new ModelChart("April", new double[] {500, 200, 80, 89})); 
+            chart.addData(new ModelChart("May", new double[] {300, 150, 200, 100}));
+            //chart.addData(new ModelChart("June", new double[] {250, 300, 100, 250}));
+            //chart.addData(new ModelChart("July", new double[] {400, 200, 300, 150}));
+            //chart.addData(new ModelChart("August", new double[] {150, 250, 200, 300}));
+            //chart.addData(new ModelChart("September", new double[] {200, 300, 250, 200}));
+            //chart.addData(new ModelChart("October", new double[] {300, 200, 150, 250}));
+            //chart.addData(new ModelChart("November", new double[] {200, 150, 300, 200}));
+            //chart.addData(new ModelChart("December", new double[] {100, 300, 250, 150}));
+            chart.start();
+            
+         //   lineChart.addLegend("Income", new Color(12, 84, 175),new Color(0, 108, 247));
+         //   lineChart.addLegend("Expense", new Color(54, 4, 143),new Color(104, 49, 200));
+         //   lineChart.addLegend("Profit", new Color(5, 125, 0),new Color(95, 209, 69));
+        //    lineChart.addLegend("Cost", new Color(186, 37, 37),new Color(241, 100, 120));
+       //     lineChart.addData(new ModelChart("January", new double[] {500, 200, 80, 89}));
+        //    lineChart.addData(new ModelChart("February", new double[] {600, 750, 90, 150}));
+         //  / lineChart.addData(new ModelChart("March", new double[] {200, 350, 460, 900}));
+         //   lineChart.addData(new ModelChart("April", new double[] {500, 200, 80, 89}));
+        //    lineChart.addData(new ModelChart("May", new double[] {300, 150, 200, 100}));
+            //lineChart.//(new ModelChart("June", new double[] {250, 300, 100, 250}));
+           //lineChart.addData(new ModelChart("July", new double[] {400, 200, 300, 150}));
+            //lineChart.addData(new ModelChart("August", new double[] {150, 250, 200, 300}));
+           //lineChart.addData(new ModelChart("September", new double[] {200, 300, 250, 200}));
+            //lineChart.addData(new ModelChart("October", new double[] {300, 200, 150, 250}));
+            //lineChart.addData(new ModelChart("November", new double[] {200, 150, 300, 200}));
+           //lin/eChart.addData(new ModelChart("December", new double[] {100, 300, 250, 150}));
+         //  lineChart.start();
+           //progress1.start();
+          // progress2.start();
+         //  progress3.start();
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,16 +74,53 @@ public class Dashboard extends javax.swing.JPanel {
     private void initComponents() {
 
         main_panel = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        chart = new com.raven.chart.Chart();
 
         setPreferredSize(new java.awt.Dimension(520, 422));
         setLayout(new java.awt.CardLayout());
 
-        main_panel.setBackground(new java.awt.Color(255, 204, 255));
+        main_panel.setBackground(new java.awt.Color(255, 255, 255));
+        main_panel.setOpaque(false);
         main_panel.setPreferredSize(new java.awt.Dimension(520, 422));
 
+        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("DASHBOARD");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(209, Short.MAX_VALUE))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 947, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout main_panelLayout = new javax.swing.GroupLayout(main_panel);
         main_panel.setLayout(main_panelLayout);
@@ -44,15 +128,17 @@ public class Dashboard extends javax.swing.JPanel {
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(315, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(main_panel, "card2");
@@ -60,7 +146,10 @@ public class Dashboard extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.chart.Chart chart;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel main_panel;
     // End of variables declaration//GEN-END:variables
 }

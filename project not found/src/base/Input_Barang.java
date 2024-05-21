@@ -8,6 +8,7 @@ import koneksi.Koneksi;
 import Barcode.main;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
 public class Input_Barang extends javax.swing.JPanel {
     Koneksi koneksi= new Koneksi();
     private DefaultTableModel model;
+
+    
     
   private void autoNumberBarang(String jenisBarang) {   
     try {
@@ -70,7 +73,7 @@ public class Input_Barang extends javax.swing.JPanel {
 
 }
     
-    public void loadData(){
+    public void tambahDataSementara(){
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     model.addRow(new Object[]{
         tx_KodeBarang.getText(),
@@ -80,7 +83,19 @@ public class Input_Barang extends javax.swing.JPanel {
          txHarga.getText(),
          txHarga1.getText(),
         tx_Jumlah.getText(),
+        tx_Nobarcode.getText()
     });
+}
+    
+private void hapusDataSementara() {
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    int rowCount = model.getRowCount();
+    
+    // Hapus semua baris satu per satu dari belakang ke depan
+    for (int i = rowCount - 1; i >= 0; i--) {
+        model.removeRow(i);
+    }
+
 }
 
 public void kosong(){
@@ -97,47 +112,14 @@ public void clear() {
     tx_Jumlah.setText("");
     txHarga.setText("");
     txHarga1.setText("");
+    tx_Nobarcode.setText("");
 }
-    
-    public void loadDataBarang(){
-    model.getDataVector().removeAllElements();
-    model.fireTableDataChanged();
-    
-    try{
-        Connection c = koneksi.getKoneksi();
-        java.sql.Statement s = c.createStatement();
-        
-        String sql = "SELECT * FROM barang";
-        ResultSet r = s.executeQuery(sql);
-        
-        while(r.next()){
-            Object[] obj = new Object[7];
-            obj [0] = r.getString("kode_barang");
-            obj [1] = r.getString("nama_barang");
-            obj [2] = r.getString("jenis_barang");
-            obj [3] = r.getString("ukuran");
-            obj [4] = r.getString("harga_beli");
-            obj [5] = r.getString("harga_jual");
-            obj [6] = r.getString("jumlah");
-            
-            model.addRow(obj);
-        }
-        r.close();
-        s.close();
-    }catch(Exception e){
-        e.printStackTrace();
-    }
-}
-
-
     /**
      * Creates new form Input_Barang
      */
         public Input_Barang() {
             initComponents();
-            
-            
-            
+       
         model = new DefaultTableModel();
         
         jTable1.setModel(model);
@@ -149,13 +131,58 @@ public void clear() {
         model.addColumn("Harga Beli");
         model.addColumn("Harga Jual");
         model.addColumn("Jumlah");
-        loadDataBarang();
-        
+        model.addColumn("No Barcode");
+    jTable1.getTableHeader().setBackground(new Color(0,40,85));
+    jTable1.getTableHeader().setForeground(Color.WHITE);
         
     }
     
    
+    private void characterDigit(KeyEvent evt) {
+        char character = evt.getKeyChar();
+        if(!Character.isDigit(character)) {
+            evt.consume();
+        }
+    }
     
+    private void tambahData() {
+            int baris = jTable1.getRowCount();
+            for(int i = 0; i < baris; i++) {
+                String kodeBrg = (String) jTable1.getValueAt(i, 0);
+                String namaBarang = (String) jTable1.getValueAt(i, 1);
+                String jenisBarang = (String) jTable1.getValueAt(i, 2);
+                String ukuran = (String) jTable1.getValueAt(i, 3);
+                System.out.println(ukuran);
+                double hrgBeli = Double.parseDouble((String)jTable1.getValueAt(i, 4));
+                double hrgJual = Double.parseDouble((String) jTable1.getValueAt(i, 5));
+                int jumlah = Integer.parseInt((String) jTable1.getValueAt(i, 6));
+                String noBarcode = (String) jTable1.getValueAt(i, 7);
+                addData(kodeBrg, namaBarang, jenisBarang, ukuran, hrgBeli, hrgJual, jumlah, noBarcode);
+            }
+    }
+    
+    private void addData(String kodeBrg, String namaBarang, String jenisBarang, String ukuran, double hrgBeli, double hrgJual, int jumlah, String noBarcode) {
+    DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+    Connection c = koneksi.getKoneksi();
+         try {
+            String sql = "INSERT INTO barang (kode_barang, harga_beli, jumlah, ukuran, harga_jual, jenis_barang, nama_barang, no_barcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            java.sql.PreparedStatement p = c.prepareStatement(sql);
+
+            p.setString(1, kodeBrg);
+            p.setDouble(2, hrgBeli);
+            p.setInt(3, jumlah); // K
+            p.setString(4, ukuran); // Kolom 4: Ukuran
+            p.setDouble(5, hrgJual); // Kolom 5: Harga Jual
+            p.setString(6, jenisBarang); // Kolom 6: Jenis barang
+            p.setString(7, namaBarang); // Kolom 7: nama barang
+            p.setString(8, noBarcode);
+            p.executeUpdate();
+            p.close();
+            
+         } catch(Exception ex) {
+             System.err.println(ex.getMessage());
+         }
+    }
     
     
     
@@ -176,7 +203,6 @@ public void clear() {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        tx_Jumlah = new javax.swing.JTextField();
         txHarga = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -186,11 +212,16 @@ public void clear() {
         tx_Ukuran = new javax.swing.JComboBox<>();
         txHarga1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        tx_Jumlah = new javax.swing.JTextField();
+        tx_Nobarcode = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btn_Simpan = new javax.swing.JButton();
         btn_Tambah = new javax.swing.JButton();
-        btn_Barcode = new javax.swing.JButton();
+        btn_Edit2 = new javax.swing.JButton();
+        btn_batal2 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(520, 422));
         setLayout(new java.awt.CardLayout());
@@ -200,7 +231,7 @@ public void clear() {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setText("Kode Barang");
+        jLabel2.setText("No Barcode");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Nama Barang");
@@ -211,15 +242,15 @@ public void clear() {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setText("Jumlah");
 
-        tx_Jumlah.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tx_JumlahActionPerformed(evt);
-            }
-        });
-
+        txHarga.setBackground(new java.awt.Color(204, 204, 204));
         txHarga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txHargaActionPerformed(evt);
+            }
+        });
+        txHarga.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txHargaKeyTyped(evt);
             }
         });
 
@@ -229,12 +260,16 @@ public void clear() {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel7.setText("Harga Beli");
 
+        tx_NamaBarang.setBackground(new java.awt.Color(204, 204, 204));
         tx_NamaBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tx_NamaBarangActionPerformed(evt);
             }
         });
 
+        tx_KodeBarang.setBackground(new java.awt.Color(204, 204, 204));
+
+        tx_JenisBarang.setBackground(new java.awt.Color(204, 204, 204));
         tx_JenisBarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kaos", "Kemeja", "Celana", "Tas" }));
         tx_JenisBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,86 +277,128 @@ public void clear() {
             }
         });
 
-        tx_Ukuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S", "M,", "L", "XL", "XXL", "XXXL", "-" }));
+        tx_Ukuran.setBackground(new java.awt.Color(204, 204, 204));
+        tx_Ukuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S", "M", "L", "XL", "XXL", "XXXL", "-" }));
 
+        txHarga1.setBackground(new java.awt.Color(204, 204, 204));
         txHarga1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txHarga1ActionPerformed(evt);
+            }
+        });
+        txHarga1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txHarga1KeyTyped(evt);
             }
         });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setText("Harga Jual");
 
+        tx_Jumlah.setBackground(new java.awt.Color(204, 204, 204));
+        tx_Jumlah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tx_JumlahActionPerformed(evt);
+            }
+        });
+        tx_Jumlah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tx_JumlahKeyTyped(evt);
+            }
+        });
+
+        tx_Nobarcode.setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setText("Kode Barang");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tx_NamaBarang)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tx_KodeBarang))
-                .addGap(44, 44, 44)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(38, 38, 38))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tx_NamaBarang, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tx_KodeBarang))
+                        .addGap(30, 30, 30)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(tx_Ukuran, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tx_JenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addComponent(txHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(235, 235, 235)
+                        .addComponent(jLabel8))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(48, 48, 48)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4)
+                                .addComponent(tx_JenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(46, 46, 46)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tx_Jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(190, Short.MAX_VALUE))
+                                    .addComponent(jLabel6)
+                                    .addComponent(tx_Ukuran, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(70, 70, 70)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7)
+                            .addComponent(txHarga1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                            .addComponent(txHarga))))
+                .addGap(70, 70, 70)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tx_Nobarcode, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tx_Jumlah))
+                .addGap(72, 72, 72))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tx_KodeBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tx_Ukuran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tx_Jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tx_KodeBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tx_Ukuran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tx_Jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tx_NamaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tx_JenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addComponent(txHarga1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tx_Nobarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("Input Barang");
 
         jScrollPane3.setBorder(null);
+        jScrollPane3.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTable1.setBackground(new java.awt.Color(204, 204, 204));
+        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -329,7 +406,15 @@ public void clear() {
             new String [] {
                 "Kode Barang", "Nama Barang", "Jenis Barang", "Ukuran", "Harga Beli", "Harga Jual", "Jumlah"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setFocusable(false);
         jTable1.setGridColor(new java.awt.Color(255, 255, 255));
         jTable1.setOpaque(false);
@@ -346,17 +431,51 @@ public void clear() {
         });
         jScrollPane3.setViewportView(jTable1);
 
-        btn_Tambah.setText("Simpan");
+        btn_Simpan.setBackground(new java.awt.Color(7, 29, 54));
+        btn_Simpan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_Simpan.setForeground(new java.awt.Color(255, 255, 255));
+        btn_Simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/SAVE.png"))); // NOI18N
+        btn_Simpan.setText("Simpan");
+        btn_Simpan.setBorder(null);
+        btn_Simpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SimpanActionPerformed(evt);
+            }
+        });
+
+        btn_Tambah.setBackground(new java.awt.Color(7, 29, 54));
+        btn_Tambah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_Tambah.setForeground(new java.awt.Color(255, 255, 255));
+        btn_Tambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/ADD.png"))); // NOI18N
+        btn_Tambah.setText("Tambah");
+        btn_Tambah.setBorder(null);
         btn_Tambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_TambahActionPerformed(evt);
             }
         });
 
-        btn_Barcode.setText("Barcode");
-        btn_Barcode.addActionListener(new java.awt.event.ActionListener() {
+        btn_Edit2.setBackground(new java.awt.Color(7, 29, 54));
+        btn_Edit2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_Edit2.setForeground(new java.awt.Color(255, 255, 255));
+        btn_Edit2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/EDIT.png"))); // NOI18N
+        btn_Edit2.setText("Edit");
+        btn_Edit2.setBorder(null);
+        btn_Edit2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_BarcodeActionPerformed(evt);
+                btn_Edit2ActionPerformed(evt);
+            }
+        });
+
+        btn_batal2.setBackground(new java.awt.Color(7, 29, 54));
+        btn_batal2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_batal2.setForeground(new java.awt.Color(255, 255, 255));
+        btn_batal2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/cancel.png"))); // NOI18N
+        btn_batal2.setText("Batal");
+        btn_batal2.setBorder(null);
+        btn_batal2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_batal2ActionPerformed(evt);
             }
         });
 
@@ -365,92 +484,53 @@ public void clear() {
         main_panelLayout.setHorizontalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_panelLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
                 .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(main_panelLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(btn_Tambah)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_Simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(main_panelLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
+                        .addGap(6, 6, 6)
                         .addComponent(jLabel1)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_panelLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(jScrollPane3)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_panelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_Simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         add(main_panel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+    private void txHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txHargaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1AncestorAdded
+    }//GEN-LAST:event_txHargaActionPerformed
 
-    private void btn_TambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TambahActionPerformed
+    private void tx_NamaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_NamaBarangActionPerformed
         // TODO add your handling code here:
-                DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-         
-try {
-            Connection c = koneksi.getKoneksi();
-                int baris = jTable1.getRowCount();
-                String kodeBarang= tx_KodeBarang.getText();
-                double hargaBeli = Double.parseDouble(txHarga.getText());
-                int jumlah = Integer.parseInt(tx_Jumlah.getText());
-                String ukuran = (String) tx_Ukuran.getSelectedItem();
-                Double hargaJual = Double.parseDouble(txHarga1.getText());
-                String jenisBarang = (String) tx_JenisBarang.getSelectedItem();
-                String namaBarang = tx_NamaBarang.getText();  
-             String sql = "INSERT INTO barang (kode_barang, nama_barang, jenis_barang, ukuran, harga_beli, harga_jual, jumlah) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            java.sql.PreparedStatement p = c.prepareStatement(sql);
-            
-            p.setString(1, kodeBarang); 
-            p.setString(2, namaBarang); 
-            p.setString(3, jenisBarang); // K
-            p.setString(4, ukuran); // Kolom 4: Ukuran
-            p.setDouble(5, hargaBeli); // Kolom 5: Harga Jual
-            p.setDouble(6, hargaJual); // Kolom 6: Jenis barang
-            p.setInt(7, jumlah); // Kolom 7: nama barang
-
-                  p.executeUpdate();
-                  p.close();
- 
-loadData();
-clear();
-JOptionPane.showMessageDialog(null, "Data Tersimpan");
-    }catch (SQLException e) {
-        System.out.println(e);
-    }
-    }//GEN-LAST:event_btn_TambahActionPerformed
-
-    private void btn_BarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BarcodeActionPerformed
-        // TODO add your handling code here:   
-    String kodeBarang = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
-    main barcodeFrame = new main(kodeBarang);
-    barcodeFrame.setVisible(true);
-    }//GEN-LAST:event_btn_BarcodeActionPerformed
-
-    private void txHarga1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txHarga1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txHarga1ActionPerformed
+    }//GEN-LAST:event_tx_NamaBarangActionPerformed
 
     private void tx_JenisBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_JenisBarangActionPerformed
         // TODO add your handling code here:
@@ -458,22 +538,62 @@ JOptionPane.showMessageDialog(null, "Data Tersimpan");
         autoNumberBarang(jenisBarang);
     }//GEN-LAST:event_tx_JenisBarangActionPerformed
 
-    private void tx_NamaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_NamaBarangActionPerformed
+    private void txHarga1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txHarga1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tx_NamaBarangActionPerformed
-
-    private void txHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txHargaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txHargaActionPerformed
+    }//GEN-LAST:event_txHarga1ActionPerformed
 
     private void tx_JumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tx_JumlahActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tx_JumlahActionPerformed
 
+    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1AncestorAdded
+
+    private void btn_SimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SimpanActionPerformed
+        int rowCount = jTable1.getRowCount();
+        if(rowCount != 0) {
+            tambahData();
+            JOptionPane.showMessageDialog(null, "Data Tersimpan");
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+        } else {
+            JOptionPane.showMessageDialog(null, "Silahkan Inputkan Barang");
+        }
+                
+    }//GEN-LAST:event_btn_SimpanActionPerformed
+
+    private void btn_TambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TambahActionPerformed
+        tambahDataSementara();
+        clear();
+    }//GEN-LAST:event_btn_TambahActionPerformed
+
+    private void btn_Edit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Edit2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Edit2ActionPerformed
+
+    private void btn_batal2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal2ActionPerformed
+        hapusDataSementara();
+    }//GEN-LAST:event_btn_batal2ActionPerformed
+
+    private void txHargaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txHargaKeyTyped
+        characterDigit(evt);
+    }//GEN-LAST:event_txHargaKeyTyped
+
+    private void txHarga1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txHarga1KeyTyped
+        characterDigit(evt);
+    }//GEN-LAST:event_txHarga1KeyTyped
+
+    private void tx_JumlahKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tx_JumlahKeyTyped
+        characterDigit(evt);
+    }//GEN-LAST:event_tx_JumlahKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Barcode;
+    private javax.swing.JButton btn_Edit2;
+    private javax.swing.JButton btn_Simpan;
     private javax.swing.JButton btn_Tambah;
+    private javax.swing.JButton btn_batal2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -482,6 +602,7 @@ JOptionPane.showMessageDialog(null, "Data Tersimpan");
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
@@ -492,6 +613,7 @@ JOptionPane.showMessageDialog(null, "Data Tersimpan");
     public static javax.swing.JTextField tx_Jumlah;
     public static javax.swing.JTextField tx_KodeBarang;
     public static javax.swing.JTextField tx_NamaBarang;
+    public static javax.swing.JTextField tx_Nobarcode;
     private javax.swing.JComboBox<String> tx_Ukuran;
     // End of variables declaration//GEN-END:variables
 }
