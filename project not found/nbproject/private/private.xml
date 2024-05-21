@@ -3,35 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/main/Main.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/menu/Menu.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Data_Pengguna.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/Barcode/main.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Dashboard.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/com/raven/swing/progress/ProgressCircleUI.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/menu/MenuItem.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/com/raven/swing/progress/Progress.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/com/raven/chart/blankchart/BlankPlotChart.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/Settings/About.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Input_Pengguna.java</file>
             <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Promo.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/com/raven/chart/blankchart/NiceScale.java</file>
+            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/main/Main.java</file>
             <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Input_Suplier.java</file>
+            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/menu/Menu.java</file>
             <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Penjualan.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/com/raven/chart/blankchart/BlankPlotChatRender.java</file>
+            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Data_Pengguna.java</file>
             <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Input_Barang.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/Barcode/KA001.png</file>
             <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/main/FrameLogin.java</file>
+            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Dashboard.java</file>
+            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/menu/MenuItem.java</file>
             <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Pembelian.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/Settings/ChangePassword.java</file>
             <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Data_Barang.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/koneksi/Koneksi.java</file>
             <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Data_Suplier.java</file>
             <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/menu/menuAnimation.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/Settings/Menu.java</file>
             <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Keuangan.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/menu/Event.java</file>
-            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/com/raven/chart/blankchart/SeriesSize.java</file>
+            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Input_Pengguna.java</file>
+            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Barang_Keluar.java</file>
+            <file>file:/D:/Git/Project/ProjectNotFound/project%20not%20found/src/base/Barang_Masuk.java</file>
         </group>
     </open-files>
 </project-private>

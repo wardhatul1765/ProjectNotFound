@@ -91,35 +91,35 @@ public class MenuItem extends JButton{
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        if(length != 0) {
-            g2d.setColor(new Color(255, 255, 255));
-            if(subMenuIndex == 1) {
+  //      if(length != 0) {
+ //           g2d.setColor(new Color(255, 255, 255));
+ //           if(subMenuIndex == 1) {
 //          First Index
-            g2d.drawLine(18, 0, 18, getHeight());
-            g2d.drawLine(18, getHeight() / 2, 26, getHeight() / 2);
+//            g2d.drawLine(18, 0, 18, getHeight());
+ //           g2d.drawLine(18, getHeight() / 2, 26, getHeight() / 2);
             
-            } else if(subMenuIndex == length - 1) {
+  //          } else if(subMenuIndex == length - 1) {
 //                Last Index
-            g2d.drawLine(18, 0, 18, getHeight() / 2);
-            g2d.drawLine(18, getHeight() / 2, 26, getHeight() / 2);
-            } else {
-            g2d.drawLine(18, 0, 18, getHeight());
-            g2d.drawLine(18, getHeight() / 2, 26, getHeight() / 2);
-            }
-        } else if(subMenu) {
-            g2d.setColor(getForeground());
-            int arrowWidth = 8;
-            int arrowHeight = 4;
-            Path2D path = new Path2D.Double();
-            path.moveTo(0, arrowHeight * animation);
-            path.lineTo(arrowWidth / 2, (1f - animation) * arrowHeight);
-            path.lineTo(arrowWidth, arrowHeight * animation);
-            g2d.translate(getWidth() - arrowWidth - 15, (getHeight() - arrowHeight) / 2);
-            g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-            g2d.draw(path);
-        }
-        g2d.dispose();
-        super.paintComponent(g); 
+ //           g2d.drawLine(18, 0, 18, getHeight() / 2);
+ //           g2d.drawLine(18, getHeight() / 2, 26, getHeight() / 2);
+ //           } else {
+ //           g2d.drawLine(18, 0, 18, getHeight());
+ //           g2d.drawLine(18, getHeight() / 2, 26, getHeight() / 2);
+ //           }
+        if(subMenu) {
+        g2d.setColor(getForeground());
+        int arrowWidth = 8;
+        int arrowHeight = 4;
+        Path2D path = new Path2D.Double();
+        path.moveTo(0, arrowHeight * animation);
+        path.lineTo(arrowWidth / 2, (1f - animation) * arrowHeight);
+        path.lineTo(arrowWidth, arrowHeight * animation);
+        g2d.translate(getWidth() - arrowWidth - 15, (getHeight() - arrowHeight) / 2);
+        g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+        g2d.draw(path);
+    }
+    g2d.dispose(); 
+    super.paintComponent(g); 
     }
     
     

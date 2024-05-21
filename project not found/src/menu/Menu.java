@@ -100,7 +100,7 @@ public class Menu extends JComponent{
         JPanel panel = new JPanel(new MigLayout("wrap 1, fillx, inset 0, gapy 0", "fill"));
         panel.setName(index + "");
         panel.setOpaque(true);
-        panel.setBackground(new Color(51, 51, 51));
+        panel.setBackground(new Color(51,65,92));
         for(int i = 1; i < length; i++) {
             MenuItem subItem = new MenuItem(menuItems[index][i], i, false);
             subItem.initSubmenu(i, length);
@@ -135,7 +135,7 @@ public class Menu extends JComponent{
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2D = (Graphics2D) g.create();
-        g2D.setColor(new Color(51, 51, 51));
+        g2D.setColor(new Color(51,65,92));
         g2D.fill(new Rectangle(0, 0, getWidth(), getHeight()));
         super.paintComponent(g); 
     }
