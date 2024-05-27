@@ -11,6 +11,9 @@ import java.awt.Font;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,12 +22,23 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
  * @author MyBook Z Series
  */
+
 public class Data_Barang extends javax.swing.JPanel {
+   private Connection conn;
     private DefaultTableModel model;
     private Koneksi koneksi = new Koneksi();
     private TableRowSorter<DefaultTableModel> rowSorter;
@@ -40,15 +54,16 @@ public class Data_Barang extends javax.swing.JPanel {
         ResultSet r = s.executeQuery(sql);
         
         while(r.next()){
-            Object[] obj = new Object[8];
+            Object[] obj = new Object[9];
             obj [0] = r.getString("kode_barang");
             obj [1] = r.getString("nama_barang");
             obj [2] = r.getString("jenis_barang");
             obj [3] = r.getString("ukuran");
-            obj [4] = r.getString("harga_beli");
-            obj [5] = r.getString("harga_jual");
-            obj [6] = r.getString("jumlah");
-            obj [7] = r.getString("no_barcode");
+            obj [4] = r.getString("warna");
+            obj [5] = r.getString("harga_beli");
+            obj [6] = r.getString("harga_jual");
+            obj [7] = r.getString("jumlah");
+            obj [8] = r.getString("no_barcode");
             
             model.addRow(obj);
         }
@@ -62,9 +77,50 @@ public class Data_Barang extends javax.swing.JPanel {
     /**
      * Creates new form Data_Barang
      */
+    
+      private void cetakBarcode() {
+        int row = TableBarang.getSelectedRow();
+        if (row < 0) {
+        // Tidak ada baris yang dipilih
+        JOptionPane.showMessageDialog(null, "Pilih baris terlebih dahulu");
+        return;
+    }
+        DecimalFormat df = new DecimalFormat("#,##0.##");
+        String kodeBarang = TableBarang.getValueAt(TableBarang.getSelectedRow(),0).toString();
+        String namaBarang = TableBarang.getValueAt(TableBarang.getSelectedRow(), 1).toString();
+        String Ukuran = TableBarang.getValueAt(TableBarang.getSelectedRow(), 3).toString();
+        String Warna = TableBarang.getValueAt(TableBarang.getSelectedRow(), 4).toString();
+        Double Harga_Jual = Double.parseDouble(TableBarang.getValueAt(TableBarang.getSelectedRow(), 6).toString());
+        String Nobarcode = TableBarang.getValueAt(TableBarang.getSelectedRow(), 8).toString();
+        try {
+           String path = "D:\\Git\\Project\\ProjectNotFound\\project not found\\src\\report\\barcode.jrxml";
+           JasperDesign design = JRXmlLoader.load(path);
+           JRDesignQuery updateQuery = new JRDesignQuery();
+           String sql = "SELECT nama_barang, ukuran, warna, harga_jual, no_barcode FROM barang WHERE kode_barang = '"+kodeBarang+"' ";
+           
+          Map paramater = new HashMap();
+           paramater.put("kode_barang", kodeBarang); 
+           paramater.put("nama_barang", namaBarang);
+           paramater.put("ukuran", Ukuran);
+           paramater.put("warna", Warna);
+           paramater.put("harga_jual", df.format(Harga_Jual));
+           paramater.put("no_barcode", Nobarcode);
+           updateQuery.setText(sql);
+           
+           design.setQuery(updateQuery);
+           JasperReport report = JasperCompileManager.compileReport(design);
+           JasperPrint print = JasperFillManager.fillReport(report, paramater, conn);
+           new JasperViewer(print, false).setVisible(true);
+       } catch(JRException ex) {
+            ex.printStackTrace();
+        }
+        
+      }
+
+        
     public Data_Barang() {
         initComponents();
-        
+        conn = Koneksi.getKoneksi();
         model = new DefaultTableModel();
         rowSorter = new TableRowSorter<>(model);
         TableBarang.setModel(model);
@@ -74,6 +130,7 @@ public class Data_Barang extends javax.swing.JPanel {
         model.addColumn("Nama Barang");
         model.addColumn("Jenis Barang");
         model.addColumn("Ukuran");
+        model.addColumn("Warna");
         model.addColumn("Harga Beli");
         model.addColumn("Harga Jual");
         model.addColumn("Jumlah");
@@ -109,7 +166,8 @@ public class Data_Barang extends javax.swing.JPanel {
             rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text, 0, 1));
         }
     }
-
+    
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,13 +191,13 @@ public class Data_Barang extends javax.swing.JPanel {
 
         TableBarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Kode Barang", "Nama Barang", "Jenis Barang", "Ukuran", "Harga Beli", "Harga Jual", "Jumlah", "No Barcode"
+                "Kode Barang", "Nama Barang", "Jenis Barang", "Ukuran", "Warna", "Harga Beli", "Harga Jual", "Jumlah", "No Barcode"
             }
         ));
         TableBarang.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -149,6 +207,11 @@ public class Data_Barang extends javax.swing.JPanel {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        TableBarang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableBarangMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(TableBarang);
@@ -173,24 +236,23 @@ public class Data_Barang extends javax.swing.JPanel {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(20, 20, 20))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -205,7 +267,7 @@ public class Data_Barang extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 562, Short.MAX_VALUE)
+            .addGap(0, 565, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -217,10 +279,12 @@ public class Data_Barang extends javax.swing.JPanel {
 
     private void btn_BarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BarcodeActionPerformed
         // TODO add your handling code here:
-        String NoBarcode = TableBarang.getValueAt(TableBarang.getSelectedRow(), 7).toString();
-        main barcodeFrame = new main(NoBarcode);
-        barcodeFrame.setVisible(true);
+     cetakBarcode();
     }//GEN-LAST:event_btn_BarcodeActionPerformed
+
+    private void TableBarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableBarangMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TableBarangMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -231,4 +295,6 @@ public class Data_Barang extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    
 }

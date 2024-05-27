@@ -156,11 +156,11 @@ public class Input_Suplier extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID Supplier", "Nama Supplier", "No Telepon", "Alamat"
+                "ID Supplier", "Nama Supplier", "Alamat", "No Telepon"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -385,7 +385,7 @@ public class Input_Suplier extends javax.swing.JPanel {
     }//GEN-LAST:event_Table_suplierAncestorAdded
 
     private void btn_EditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_EditMouseClicked
-        // TODO add your handling code here:
+       editTable();
     }//GEN-LAST:event_btn_EditMouseClicked
 
     private void btn_EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EditActionPerformed
