@@ -57,13 +57,13 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI Emoji" size="28" style="0"/>
+              <Font name="Segoe Print" size="28" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Not Found"/>
+            <Property name="text" type="java.lang.String" value="NOTIMETOHELL"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="140" y="240" width="-1" height="-1"/>
+              <AbsoluteConstraints x="90" y="230" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

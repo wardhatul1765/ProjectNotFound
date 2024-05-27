@@ -56,9 +56,9 @@ public class FrameLogin extends javax.swing.JFrame {
         jLabel5.setText("WELCOME TO");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 28)); // NOI18N
-        jLabel1.setText("Not Found");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Segoe Print", 1, 28)); // NOI18N
+        jLabel1.setText("NOTIMETOHELL");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 380, 480));
 
@@ -179,6 +179,7 @@ public class FrameLogin extends javax.swing.JFrame {
             
            if (rs.next()) {
            // Menutup frame login
+             String id = rs.getString("id_pengguna");
              String nama_pengguna = rs.getString("nama_pengguna");
              String jabatan = rs.getString("jabatan");
              
@@ -186,7 +187,7 @@ public class FrameLogin extends javax.swing.JFrame {
               dispose();
 
             // Membuka frame Main dengan mengirimkan username dan jabatan
-           Main ksb = new Main(nama_pengguna, jabatan);
+            Main ksb = new Main(nama_pengguna, jabatan, id);
             ksb.show(); // Menampilkan frame utama
 
             // Tampilkan pesan selamat datang

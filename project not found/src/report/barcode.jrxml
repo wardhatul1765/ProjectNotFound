@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="113" pageHeight="170" columnWidth="113" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ceb2b252-7f01-4206-a027-478bd338575b">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT nama_barang, 
+ukuran,
+ warna,
+ harga_jual
+ from barang;]]>
+	</queryString>
+	<field name="nama_barang" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ukuran" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="warna" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="harga_jual" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="113" height="20" uuid="483d42c8-a44a-496e-b9d7-8d48171f1601"/>
+				<textFieldExpression><![CDATA[$F{nama_barang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="100" height="20" uuid="c9f77958-09c4-4494-b20d-6fda6559343c"/>
+				<textFieldExpression><![CDATA[$F{ukuran}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="40" width="100" height="20" uuid="2414a1bd-4772-4b2f-9918-f1baefc3ac3b"/>
+				<textFieldExpression><![CDATA[$F{warna}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="60" width="100" height="20" uuid="89d7f2c2-a5c7-4c7b-a46b-978c0f530f3a"/>
+				<textFieldExpression><![CDATA[$F{harga_jual}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="100" width="113" height="25" uuid="c916c154-ac26-4ffd-9d5b-d8ad6afcb754"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{no_barcode}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

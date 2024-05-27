@@ -46,10 +46,11 @@ public class Main extends javax.swing.JFrame {
     private String Nama;
     private String jabatan;
     private String statusAkses;
+    private String id;
     
-    public Main(String Nama, String jabatan) {
+    public Main(String Nama, String jabatan, String id) {
         initComponents();
-        
+         this.id = id;
          this.Nama = Nama;
          this.jabatan = jabatan;
         
@@ -108,6 +109,7 @@ public class Main extends javax.swing.JFrame {
         lb_tanggal = new javax.swing.JLabel();
         btn_setting = new javax.swing.JButton();
         lb_namaJabatan = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -208,6 +210,8 @@ public class Main extends javax.swing.JFrame {
         lb_namaJabatan.setForeground(new java.awt.Color(255, 255, 255));
         lb_namaJabatan.setText("Selamat Datang");
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -215,6 +219,8 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(178, 178, 178)
                 .addComponent(lb_namaJabatan)
+                .addGap(167, 167, 167)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lb_tanggal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -228,7 +234,8 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(btn_setting)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lb_tanggal)
-                        .addComponent(lb_namaJabatan)))
+                        .addComponent(lb_namaJabatan)
+                        .addComponent(jLabel1)))
                 .addContainerGap())
         );
 
@@ -308,13 +315,14 @@ public class Main extends javax.swing.JFrame {
             // Menjadi seperti ini
             String Nama = "your_username"; // Ganti dengan username yang sesuai
             String jabatan = "your_jabatan"; // Ganti dengan jabatan yang sesuai
-            new Main(Nama, jabatan).setVisible(true);
+            new Main("", "", "").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_setting;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -338,7 +346,7 @@ private void Action() {
                 showMenu(index, subIndex);
             } else {
                 // Batasi akses untuk karyawan
-                if (!((index == 1 && subIndex == 1) || (index == 1 && subIndex == 2) || (index == 1 && subIndex == 3))) {
+                if (!((index == 1 && subIndex == 1)||(index == 1 && subIndex == 2) || (index == 1 && subIndex == 3) || (index == 2 && subIndex == 1)||(index == 2 && subIndex == 2)||(index == 2 && subIndex == 3)||(index == 3 && subIndex == 0)||(index == 6 && subIndex == 1)||(index == 6 && subIndex == 2)||(index == 6 && subIndex == 3))) {
                     showMenu(index, subIndex);
                 } else {
                     // Tampilkan pesan bahwa karyawan tidak diizinkan mengakses fitur tersebut
@@ -366,15 +374,15 @@ private void showMenu(int index, int subIndex) {
                 changePanel(new Data_Pengguna());
             } else if (index == 3 && subIndex == 0) {
                     changePanel(new Promo());
-            } else if(index == 4 && subIndex == 1)  {
-                changePanel(new Pembelian());
-            } else if(index == 4 && subIndex == 2)  {
-                changePanel(new Penjualan());
-            } else if(index == 5 && subIndex == 1)  {
+            } else if(index == 4 && subIndex == 0)  {
+                changePanel(new Pembelian(id));
+            } else if(index == 5 && subIndex == 0)  {
+                changePanel(new Penjualan(id));
+            } else if(index == 6 && subIndex == 1)  {
                 changePanel(new Barang_Masuk());
-            } else if(index == 5 && subIndex == 2)  {
+            } else if(index == 6 && subIndex == 2)  {
                 changePanel(new Barang_Keluar());
-            } else if(index == 5 && subIndex == 3)  {
+            } else if(index == 6 && subIndex == 3)  {
                 changePanel(new Keuangan());
     }
 }

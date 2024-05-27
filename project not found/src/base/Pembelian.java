@@ -130,7 +130,7 @@ public class Pembelian extends javax.swing.JPanel {
         dialog.setLocationRelativeTo(null);
         
         // Create sample data for demonstration
-        String[] columnNames = {"Kode Barang", "Nama Barang", "Ukuran", "Warna", "Harga", "No Barcode"};
+        String[] columnNames = {"Kode Barang", "Nama Barang", "Ukuran", "Warna", "Harga Beli", "Harga Jual", "No Barcode"};
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(columnNames);
         JTable table = new JTable(model);
@@ -140,7 +140,7 @@ public class Pembelian extends javax.swing.JPanel {
         dialog.add(scrollPane, BorderLayout.CENTER);
         
         try {
-            String query = "SELECT kode_barang, nama_barang, ukuran, warna, no_barcode FROM barang";
+            String query = "SELECT kode_barang, nama_barang, ukuran, warna, harga_beli, harga_jual, no_barcode FROM barang";
             PreparedStatement pst = conn.prepareStatement(query);
             ResultSet rst =pst.executeQuery();
             
@@ -150,9 +150,11 @@ public class Pembelian extends javax.swing.JPanel {
                 String namaBarang = rst.getString("nama_barang");
                 String ukuranBarang = rst.getString("ukuran");
                 String warnaBarang = rst.getNString("warna");
+                Double hrgBeli = rst.getDouble("harga_beli");
+                Double hrgJual = rst.getDouble("harga_jual");
                 String noBarcode = rst.getString("no_barcode");
                 
-                model.addRow(new Object[]{kodeBarang, namaBarang, ukuranBarang, warnaBarang, noBarcode});
+                model.addRow(new Object[]{kodeBarang, namaBarang, ukuranBarang, warnaBarang, hrgBeli, hrgJual, noBarcode});
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -172,13 +174,17 @@ public class Pembelian extends javax.swing.JPanel {
                     String namaBarang = (String) table.getValueAt(selectedRow, 1);
                     String ukuranBarang = (String) table.getValueAt(selectedRow, 2);
                     String warnaBarang = (String) table.getValueAt(selectedRow, 3);
+                    Double hargaBeli = (Double) table.getValueAt(selectedRow, 4);
+                    Double hargaJual = (Double) table.getValueAt(selectedRow, 5);
                     
                     // Set data to text fields
                     tx_Kodebarang.setText(kodeBarang);
                     txt_namabarr.setText(namaBarang);
                     txt_ukuran.setText(ukuranBarang);
                     txt_warna.setText(warnaBarang);
-                    
+                    txt_hargabeli1.setText(String.valueOf(hargaBeli));
+                    txt_hargajual.setText(String.valueOf(hargaJual));
+
                     // Close the dialog
                     dialog.dispose();
                 } else {
@@ -240,7 +246,6 @@ public class Pembelian extends javax.swing.JPanel {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date dateNow = new Date();
             String tglPembelian = sdf.format(dateNow);
-            String idPengguna = "1";
             double totalHarga = updateGrandTotal();
             
             for(int i = 0; i < Table_pembelian.getRowCount(); i++) {
@@ -248,7 +253,7 @@ public class Pembelian extends javax.swing.JPanel {
                   
             try { String query = "INSERT INTO pembelian (id_pengguna, id_supplier, no_pembelian, tgl_pembelian, total_harga) VALUES(?,?,?,?,?)";
                 PreparedStatement pst = conn.prepareStatement(query);
-                pst.setString(1, idPengguna);
+                pst.setString(1, id);
                 
                 for(String id : new String[]{idSplr}) {
                     pst.setString(2, id);
@@ -320,24 +325,20 @@ public class Pembelian extends javax.swing.JPanel {
         conn.setAutoCommit(false);
 
         // Query SQL untuk update data
-        String query = "UPDATE barang SET jumlah = jumlah + ?, harga_beli = ?, harga_jual = ? WHERE kode_barang = ?";
+        String query = "UPDATE barang SET jumlah = jumlah + ? WHERE kode_barang = ?";
         pstmt = conn.prepareStatement(query);
 
         // Loop melalui semua baris di JTable
         for (int i = 0; i < Table_pembelian.getRowCount(); i++) {
             String kodeBarang = (String) Table_pembelian.getValueAt(i, 2);
             int jumlahBarang = Integer.parseInt(Table_pembelian.getValueAt(i, 8).toString());
-            double hargaBeliBarang = Double.parseDouble(Table_pembelian.getValueAt(i, 6).toString());
-            double hargaJualBarang = Double.parseDouble(Table_pembelian.getValueAt(i, 7).toString());
 
             // Debug log untuk setiap parameter yang diset
-            System.out.println("Updating kode_barang: " + kodeBarang + " dengan jumlah: " + jumlahBarang + ", harga_beli: " + hargaBeliBarang + ", serta harga_jual: " + hargaJualBarang);
+            System.out.println("Updating kode_barang: " + kodeBarang + " dengan jumlah: " + jumlahBarang);
 
             // Set parameter untuk query
             pstmt.setInt(1, jumlahBarang);
-            pstmt.setDouble(2, hargaBeliBarang);
-            pstmt.setDouble(3, hargaJualBarang);
-            pstmt.setString(4, kodeBarang);
+            pstmt.setString(2, kodeBarang);
 
             // Tambahkan batch
             pstmt.addBatch();
@@ -375,9 +376,10 @@ public class Pembelian extends javax.swing.JPanel {
      * Creates new form Pembelian
      */
     private Connection conn;
-    
-    public Pembelian() {
+    private String id;
+    public Pembelian(String id) {
         initComponents();
+        this.id = id;
          conn = Koneksi.getKoneksi();
         lb_Pembelian.setText(autoNumber());
     }

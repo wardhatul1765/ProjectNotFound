@@ -206,6 +206,8 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="178" max="-2" attributes="0"/>
                   <Component id="lb_namaJabatan" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="167" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="lb_tanggal" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -222,6 +224,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lb_tanggal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lb_namaJabatan" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -272,6 +275,13 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Selamat Datang"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

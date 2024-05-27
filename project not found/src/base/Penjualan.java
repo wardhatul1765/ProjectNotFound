@@ -277,7 +277,6 @@ public class Penjualan extends javax.swing.JPanel {
             double bayar = Double.parseDouble(tx_Bayar.getText());
             double kembali = Double.parseDouble(tx_Kembalian.getText());
             String jenisBayar = cmb_jenisbyr.getSelectedItem().toString();
-            String idPengguna = "1";
             
             String query = "INSERT INTO penjualan (no_penjualan, tgl_jual, diskon, total_harga, bayar, kembali, jenis_bayar, id_pengguna) "
                     + "VALUES (?,?,?,?,?,?,?,?)";
@@ -290,7 +289,7 @@ public class Penjualan extends javax.swing.JPanel {
                 pst.setDouble(5, bayar);
                 pst.setDouble(6, kembali);
                 pst.setString(7, jenisBayar);
-                pst.setString(8, idPengguna);
+                pst.setString(8, id);
                 pst.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Sukses");
             } catch(SQLException ex) {
@@ -325,6 +324,61 @@ public class Penjualan extends javax.swing.JPanel {
                 }
             }
     }
+    
+    private void updateDataFromTable() {
+    // Mendapatkan koneksi dari sumber yang sesuai (misalnya, Koneksi.getKoneksi())
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    try {
+        conn = Koneksi.getKoneksi();
+        // Mengatur auto-commit ke false untuk mengelola transaksi manual
+        conn.setAutoCommit(false);
+
+        // Query SQL untuk update data
+        String query = "UPDATE barang SET jumlah = jumlah - ? WHERE kode_barang = ?";
+        pstmt = conn.prepareStatement(query);
+
+        // Loop melalui semua baris di JTable
+        for (int i = 0; i < Table_Penjualan.getRowCount(); i++) {
+            String kodeBarang = (String) Table_Penjualan.getValueAt(i, 0);
+            int jumlahBarang = Integer.parseInt(Table_Penjualan.getValueAt(i, 5).toString());
+
+            // Debug log untuk setiap parameter yang diset
+            System.out.println("Updating kode_barang: " + kodeBarang + " dengan jumlah: " + jumlahBarang);
+
+            // Set parameter untuk query
+            pstmt.setInt(1, jumlahBarang);
+            pstmt.setString(2, kodeBarang);
+
+            // Tambahkan batch
+            pstmt.addBatch();
+        }
+
+        // Eksekusi batch update
+        int[] updateCounts = pstmt.executeBatch();
+        conn.commit();
+
+        // Cek hasil update
+        for (int count : updateCounts) {
+            if (count == PreparedStatement.EXECUTE_FAILED) {
+                System.out.println("Terjadi kesalahan saat memperbarui data.");
+            }
+        }
+
+        System.out.println("Data berhasil diperbarui.");
+    } catch (SQLException e) {
+        // Rollback jika terjadi kesalahan
+        try {
+            if (conn != null) {
+                conn.rollback();
+                System.out.println("Rollback perubahan karena terjadi kesalahan.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        e.printStackTrace();
+    }
+}
 
     private static void transaksiPenjualan () {
         Connection conn = Koneksi.getKoneksi();
@@ -341,7 +395,7 @@ public class Penjualan extends javax.swing.JPanel {
         Double bayar = Double.valueOf(tx_Bayar.getText());
         Double kembali = Double.valueOf(tx_Kembalian.getText());
         try {
-           String path = "D:\\Git\\Project\\ProjectNotFound\\project not found\\src\\report\\StrukPenjualan.jrxml";
+           String path = "D:\\Git\\Project\\ProjectNotFound\\project not found\\src\\report\\strukpenjualan.jrxml";
            JasperDesign design = JRXmlLoader.load(path);
            JRDesignQuery updateQuery = new JRDesignQuery();
            String sql = "SELECT brg.nama_barang, brg.harga_jual, dtl.jumlah, dtl.total_harga \n" +
@@ -370,8 +424,10 @@ public class Penjualan extends javax.swing.JPanel {
     /**
      * Creates new form Penjualan
      */
-    public Penjualan() {
+    private String id;
+    public Penjualan(String id) {
         initComponents();
+        this.id = id;
         conn = Koneksi.getKoneksi();
         label_no_transaksi.setText(autoNumber());
     }
@@ -986,6 +1042,7 @@ public class Penjualan extends javax.swing.JPanel {
 
     private void btn_TransaksiBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TransaksiBaruActionPerformed
         tambahData();
+        updateDataFromTable();
     }//GEN-LAST:event_btn_TransaksiBaruActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

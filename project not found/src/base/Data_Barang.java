@@ -31,6 +31,7 @@ import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -93,17 +94,12 @@ public class Data_Barang extends javax.swing.JPanel {
         Double Harga_Jual = Double.parseDouble(TableBarang.getValueAt(TableBarang.getSelectedRow(), 6).toString());
         String Nobarcode = TableBarang.getValueAt(TableBarang.getSelectedRow(), 8).toString();
         try {
-           String path = "D:\\Git\\Project\\ProjectNotFound\\project not found\\src\\report\\barcode.jrxml";
+           String path = "D:\\Git\\Project\\ProjectNotFound\\project not found\\src\\report\\Barang.jrxml";
            JasperDesign design = JRXmlLoader.load(path);
            JRDesignQuery updateQuery = new JRDesignQuery();
-           String sql = "SELECT nama_barang, ukuran, warna, harga_jual, no_barcode FROM barang WHERE kode_barang = '"+kodeBarang+"' ";
+           String sql = "SELECT nama_barang, ukuran, warna, harga_jual FROM barang WHERE kode_barang = '"+kodeBarang+"' ";
            
-          Map paramater = new HashMap();
-           paramater.put("kode_barang", kodeBarang); 
-           paramater.put("nama_barang", namaBarang);
-           paramater.put("ukuran", Ukuran);
-           paramater.put("warna", Warna);
-           paramater.put("harga_jual", df.format(Harga_Jual));
+           Map paramater = new HashMap();
            paramater.put("no_barcode", Nobarcode);
            updateQuery.setText(sql);
            
@@ -116,6 +112,50 @@ public class Data_Barang extends javax.swing.JPanel {
         }
         
       }
+      
+      private void editTable() {
+        int[] selectedRows = TableBarang.getSelectedRows();
+        int selectedColumn = TableBarang.getSelectedColumn();
+
+        if (selectedRows.length == 1 && selectedColumn != -1) {
+            int selectedRow = selectedRows[0];
+
+            String columnName = TableBarang.getColumnName(selectedColumn);
+            if (columnName.equals("Harga Beli") || columnName.equals("Harga Jual")) {
+                Object oldValue = TableBarang.getValueAt(selectedRow, selectedColumn);
+                Object newValue = JOptionPane.showInputDialog(null, "Edit value:", oldValue);
+                if (newValue != null) {
+                    // Update JTable
+                    model.setValueAt(newValue, selectedRow, selectedColumn);
+
+                    // Retrieve the primary key value or unique identifier of the selected row
+                    Object idValue = TableBarang.getValueAt(selectedRow, TableBarang.getColumn("kode_barang").getModelIndex());
+
+                    // Update the database
+                    updateDatabase(idValue, columnName, newValue);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Only 'Harga Beli' and 'Harga Jual' can be edited.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select one row and one column to edit.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void updateDatabase(Object idValue, String columnName, Object newValue) {
+        String sql = "UPDATE yourTableName SET " + columnName + " = ? WHERE kode_barang = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setObject(1, newValue);
+            pstmt.setObject(2, idValue);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                JOptionPane.showMessageDialog(null, "Failed to update the database.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error occurred while updating the database.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
         
     public Data_Barang() {
@@ -183,6 +223,7 @@ public class Data_Barang extends javax.swing.JPanel {
         TableBarang = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         btn_Barcode = new javax.swing.JButton();
+        btn_Edit2 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -225,6 +266,15 @@ public class Data_Barang extends javax.swing.JPanel {
             }
         });
 
+        btn_Edit2.setBackground(new java.awt.Color(182, 69, 44));
+        btn_Edit2.setText("Edit");
+        btn_Edit2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
+        btn_Edit2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Edit2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -236,13 +286,15 @@ public class Data_Barang extends javax.swing.JPanel {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
+                        .addGap(20, 20, 20))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,9 +303,11 @@ public class Data_Barang extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -286,10 +340,15 @@ public class Data_Barang extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_TableBarangMouseClicked
 
+    private void btn_Edit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Edit2ActionPerformed
+        editTable();
+    }//GEN-LAST:event_btn_Edit2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableBarang;
     private javax.swing.JButton btn_Barcode;
+    private javax.swing.JButton btn_Edit2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

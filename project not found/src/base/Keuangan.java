@@ -3,18 +3,106 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package base;
+import koneksi.Koneksi;
+import Barcode.main;
+import java.awt.Color;
+import java.awt.Font;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 
 /**
  *
  * @author KakaPatria
  */
 public class Keuangan extends javax.swing.JPanel {
-
+    private Connection conn;
+    private DefaultTableModel model;
+    private Koneksi koneksi = new Koneksi();
+    
+    
+    public void loadDataBarang() {
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        
+        try {
+            Connection c = koneksi.getKoneksi();
+            
+            // Query untuk total harga pembelian
+            String sqlPembelian = "SELECT SUM(total_harga) AS total_harga FROM pembelian;";
+            PreparedStatement pstPembelian = c.prepareStatement(sqlPembelian);
+            ResultSet rPembelian = pstPembelian.executeQuery();
+            double totalPembelian = 0;
+            if (rPembelian.next()) {
+                totalPembelian = rPembelian.getDouble("total_harga");
+            }
+            rPembelian.close();
+            pstPembelian.close();
+            
+            // Query untuk total harga jual
+            String sqlPenjualan = "SELECT SUM(total_harga) AS total_harga FROM penjualan;";
+            PreparedStatement pstPenjualan = c.prepareStatement(sqlPenjualan);
+            ResultSet rPenjualan = pstPenjualan.executeQuery();
+            double totalPenjualan = 0;
+            if (rPenjualan.next()) {
+                totalPenjualan = rPenjualan.getDouble("total_harga");
+            }
+            rPenjualan.close();
+            pstPenjualan.close();
+            
+            // Menghitung profit
+            double profit = totalPenjualan - totalPembelian;
+            
+            // Menambahkan data ke tabel
+            Object[] obj = new Object[3];
+            obj[0] = totalPembelian;
+            obj[1] = totalPenjualan;
+            obj[2] = profit;
+            model.addRow(obj);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Creates new form Keuangan
      */
     public Keuangan() {
         initComponents();
+        conn = koneksi.getKoneksi();
+        model = new DefaultTableModel();
+        TableKeuangan.setModel(model);
+        // Define the columns in the table model
+        model.addColumn("Pengeluaran");
+        model.addColumn("Pemasukan");
+        model.addColumn("Keuntungan");
+        // Load the data into the table
+        loadDataBarang();
+    }
+
+    // Ensure this method exists and is correctly implemented to initialize components
+    private void initComponent() {
+        JScrollPane scrollPane = new JScrollPane(TableKeuangan);
+        this.add(scrollPane);
+        
+        
     }
 
     /**
@@ -29,7 +117,7 @@ public class Keuangan extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TableBarangKeluar = new javax.swing.JTable();
+        TableKeuangan = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
@@ -41,7 +129,7 @@ public class Keuangan extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("Keuangan");
 
-        TableBarangKeluar.setModel(new javax.swing.table.DefaultTableModel(
+        TableKeuangan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -52,7 +140,7 @@ public class Keuangan extends javax.swing.JPanel {
                 "Cost", "Income", "Profit"
             }
         ));
-        jScrollPane1.setViewportView(TableBarangKeluar);
+        jScrollPane1.setViewportView(TableKeuangan);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Modal");
@@ -98,7 +186,7 @@ public class Keuangan extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TableBarangKeluar;
+    private javax.swing.JTable TableKeuangan;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
