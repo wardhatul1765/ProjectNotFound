@@ -382,6 +382,8 @@ public class Pembelian extends javax.swing.JPanel {
         this.id = id;
          conn = Koneksi.getKoneksi();
         lb_Pembelian.setText(autoNumber());
+            Table_pembelian.getTableHeader().setBackground(new Color(0,40,85));
+        Table_pembelian.getTableHeader().setForeground(Color.WHITE);
     }
 
       

@@ -156,6 +156,8 @@ public void clear() {
         model.addColumn("Harga Jual");
         model.addColumn("Jumlah");
         model.addColumn("No Barcode");
+       jTable1.getTableHeader().setBackground(new Color(0,40,85));
+        jTable1.getTableHeader().setForeground(Color.WHITE);
         
         
     }
@@ -274,16 +276,16 @@ public void clear() {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel7.setText("Harga Beli");
 
-        tx_NamaBarang.setBackground(new java.awt.Color(182, 69, 44));
+        tx_NamaBarang.setBackground(new java.awt.Color(204, 204, 204));
         tx_NamaBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tx_NamaBarangActionPerformed(evt);
             }
         });
 
-        tx_KodeBarang.setBackground(new java.awt.Color(182, 69, 44));
+        tx_KodeBarang.setBackground(new java.awt.Color(204, 204, 204));
 
-        tx_JenisBarang.setBackground(new java.awt.Color(182, 69, 44));
+        tx_JenisBarang.setBackground(new java.awt.Color(204, 204, 204));
         tx_JenisBarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kaos", "Kemeja", "Jersey", "Tas" }));
         tx_JenisBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,10 +293,10 @@ public void clear() {
             }
         });
 
-        tx_Ukuran.setBackground(new java.awt.Color(182, 69, 44));
+        tx_Ukuran.setBackground(new java.awt.Color(204, 204, 204));
         tx_Ukuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S", "M", "L", "XL", "XXL", "All Size" }));
 
-        txHarga1.setBackground(new java.awt.Color(182, 69, 44));
+        txHarga1.setBackground(new java.awt.Color(204, 204, 204));
         txHarga1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txHarga1ActionPerformed(evt);
@@ -309,7 +311,7 @@ public void clear() {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setText("Harga Jual");
 
-        tx_Jumlah.setBackground(new java.awt.Color(182, 69, 44));
+        tx_Jumlah.setBackground(new java.awt.Color(204, 204, 204));
         tx_Jumlah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tx_JumlahActionPerformed(evt);
@@ -321,12 +323,12 @@ public void clear() {
             }
         });
 
-        tx_Nobarcode.setBackground(new java.awt.Color(182, 69, 44));
+        tx_Nobarcode.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setText("Kode Barang");
 
-        txwarna.setBackground(new java.awt.Color(182, 69, 44));
+        txwarna.setBackground(new java.awt.Color(204, 204, 204));
         txwarna.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txwarnaActionPerformed(evt);
@@ -338,7 +340,7 @@ public void clear() {
             }
         });
 
-        txHarga.setBackground(new java.awt.Color(182, 69, 44));
+        txHarga.setBackground(new java.awt.Color(204, 204, 204));
         txHarga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txHargaActionPerformed(evt);
@@ -399,7 +401,7 @@ public void clear() {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tx_Jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,7 +450,7 @@ public void clear() {
         jScrollPane3.setBorder(null);
         jScrollPane3.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setBackground(new java.awt.Color(221, 197, 162));
+        jTable1.setBackground(new java.awt.Color(204, 204, 204));
         jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -482,7 +484,9 @@ public void clear() {
         });
         jScrollPane3.setViewportView(jTable1);
 
-        btn_Simpan.setBackground(new java.awt.Color(182, 69, 44));
+        btn_Simpan.setBackground(new java.awt.Color(7, 29, 54));
+        btn_Simpan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_Simpan.setForeground(new java.awt.Color(255, 255, 255));
         btn_Simpan.setText("Simpan");
         btn_Simpan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_Simpan.addActionListener(new java.awt.event.ActionListener() {
@@ -491,7 +495,9 @@ public void clear() {
             }
         });
 
-        btn_Tambah.setBackground(new java.awt.Color(182, 69, 44));
+        btn_Tambah.setBackground(new java.awt.Color(7, 29, 54));
+        btn_Tambah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_Tambah.setForeground(new java.awt.Color(255, 255, 255));
         btn_Tambah.setText("Tambah");
         btn_Tambah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_Tambah.addActionListener(new java.awt.event.ActionListener() {
@@ -500,7 +506,9 @@ public void clear() {
             }
         });
 
-        btn_Edit2.setBackground(new java.awt.Color(182, 69, 44));
+        btn_Edit2.setBackground(new java.awt.Color(7, 29, 54));
+        btn_Edit2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_Edit2.setForeground(new java.awt.Color(255, 255, 255));
         btn_Edit2.setText("Edit");
         btn_Edit2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_Edit2.addActionListener(new java.awt.event.ActionListener() {
@@ -509,7 +517,9 @@ public void clear() {
             }
         });
 
-        btn_batal2.setBackground(new java.awt.Color(182, 69, 44));
+        btn_batal2.setBackground(new java.awt.Color(7, 29, 54));
+        btn_batal2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_batal2.setForeground(new java.awt.Color(255, 255, 255));
         btn_batal2.setText("Batal");
         btn_batal2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_batal2.addActionListener(new java.awt.event.ActionListener() {
@@ -525,22 +535,20 @@ public void clear() {
             .addGroup(main_panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(main_panelLayout.createSequentialGroup()
-                        .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addComponent(jScrollPane3)
-                    .addGroup(main_panelLayout.createSequentialGroup()
-                        .addGap(426, 426, 426)
-                        .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(btn_Simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))))
+                    .addComponent(jLabel1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addComponent(jScrollPane3)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_panelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(btn_Simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -549,15 +557,15 @@ public void clear() {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         add(main_panel, "card2");

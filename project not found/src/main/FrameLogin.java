@@ -23,6 +23,7 @@ public class FrameLogin extends javax.swing.JFrame {
      */
     public FrameLogin() {
         initComponents();
+        lb_HidePassword.setVisible(false);
     }
 
     /**
@@ -39,6 +40,8 @@ public class FrameLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        lb_ShowPassword = new javax.swing.JLabel();
+        lb_HidePassword = new javax.swing.JLabel();
         txt_user = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -63,10 +66,30 @@ public class FrameLogin extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 380, 480));
 
         jPanel2.setBackground(new java.awt.Color(7, 29, 54));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 26)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("FORM LOGIN");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 68, -1, -1));
+
+        lb_ShowPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_ShowPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/eye.png"))); // NOI18N
+        lb_ShowPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lb_ShowPasswordMouseClicked(evt);
+            }
+        });
+        jPanel2.add(lb_ShowPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 306, 40, 30));
+
+        lb_HidePassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_HidePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/hide.png"))); // NOI18N
+        lb_HidePassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lb_HidePasswordMouseClicked(evt);
+            }
+        });
+        jPanel2.add(lb_HidePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 306, 40, 30));
 
         txt_user.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txt_user.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -76,14 +99,17 @@ public class FrameLogin extends javax.swing.JFrame {
                 txt_userActionPerformed(evt);
             }
         });
+        jPanel2.add(txt_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 223, 299, 38));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Username");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 198, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Password");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 279, -1, -1));
 
         btn_login.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btn_login.setText("Login");
@@ -93,58 +119,15 @@ public class FrameLogin extends javax.swing.JFrame {
                 btn_loginActionPerformed(evt);
             }
         });
+        jPanel2.add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 360, 109, 42));
 
         txt_pass.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txt_pass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_pass.setBorder(null);
+        jPanel2.add(txt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 304, 299, 38));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/user.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(155, 155, 155)
-                .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(52, 52, 52)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txt_user, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
-                        .addComponent(txt_pass)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_user, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
-        );
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 116, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(379, 0, 390, 481));
 
@@ -206,6 +189,21 @@ public class FrameLogin extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_btn_loginActionPerformed
 
+    private void lb_ShowPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_ShowPasswordMouseClicked
+        // TODO add your handling code here:
+        lb_ShowPassword.setVisible(false);
+        lb_HidePassword.setVisible(true);
+        txt_pass.setEchoChar((char)0);
+    }//GEN-LAST:event_lb_ShowPasswordMouseClicked
+
+    private void lb_HidePasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_HidePasswordMouseClicked
+        // TODO add your handling code here:
+        lb_ShowPassword.setVisible(true);
+        lb_HidePassword.setVisible(false);
+        txt_pass.setEchoChar('*');
+        
+    }//GEN-LAST:event_lb_HidePasswordMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -232,6 +230,8 @@ public class FrameLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lb_HidePassword;
+    private javax.swing.JLabel lb_ShowPassword;
     private javax.swing.JPasswordField txt_pass;
     private javax.swing.JTextField txt_user;
     // End of variables declaration//GEN-END:variables
