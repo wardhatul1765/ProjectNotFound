@@ -33,7 +33,8 @@ public class Menu extends JComponent{
         {"Master", "Input Barang", "Input Suplier", "Input Pengguna"},
         {"Data", "Data Barang", "Data Suplier", "Data Pengguna"},
         {"Promo"},
-        {"Transaksi", "Pembelian", "Penjualan"},
+        {"ReStok"},
+        {"Kasir"},
         {"Laporan", "Data Barang Masuk", "Data Barang Keluar","Keuangan"},
     };
     

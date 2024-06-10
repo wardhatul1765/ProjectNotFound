@@ -110,7 +110,7 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
       try {
             Linear barcode = new Linear();
-            barcode.setType(Linear.CODE128B);
+            barcode.setType(Linear.CODE39);
             barcode.setData(br_data.getText());
             barcode.setI(11.0f);
 

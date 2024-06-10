@@ -46,10 +46,11 @@ public class Main extends javax.swing.JFrame {
     private String Nama;
     private String jabatan;
     private String statusAkses;
+      private String id;
     
-    public Main(String Nama, String jabatan) {
+    public Main(String Nama, String jabatan, String id) {
         initComponents();
-        
+         this.id = id;
          this.Nama = Nama;
          this.jabatan = jabatan;
         
@@ -305,7 +306,7 @@ public class Main extends javax.swing.JFrame {
             // Menjadi seperti ini
             String Nama = "your_username"; // Ganti dengan username yang sesuai
             String jabatan = "your_jabatan"; // Ganti dengan jabatan yang sesuai
-            new Main(Nama, jabatan).setVisible(true);
+             new Main("", "", "").setVisible(true);
             }
         });
     }
@@ -336,8 +337,11 @@ private void Action() {
                 showMenu(index, subIndex);
             } else {
                 // Batasi akses untuk karyawan
-                if (!((index == 1 && subIndex == 1) || (index == 1 && subIndex == 2) || (index == 1 && subIndex == 3))) {
-                    showMenu(index, subIndex);
+            if (!((index == 1 && subIndex == 1) || (index == 1 && subIndex == 2) || (index == 1 && subIndex == 3) ||
+                          (index == 2 && subIndex == 1) || (index == 2 && subIndex == 2) || (index == 2 && subIndex == 3) ||
+                          (index == 3 && subIndex == 0) || (index == 6 && subIndex == 1) || (index == 6 && subIndex == 2) ||
+                          (index == 6 && subIndex == 3))) {
+                        showMenu(index, subIndex);
                 } else {
                     // Tampilkan pesan bahwa karyawan tidak diizinkan mengakses fitur tersebut
                     JOptionPane.showMessageDialog(Main.this, "Maaf, Anda tidak diizinkan mengakses fitur ini.", "Akses Ditolak", JOptionPane.WARNING_MESSAGE);
@@ -348,7 +352,7 @@ private void Action() {
 } 
 
 private void showMenu(int index, int subIndex) {
-     if(index == 0 && subIndex==0) {
+        if(index == 0 && subIndex==0) {
                changePanel(new Dashboard());
             } else if (index == 1 && subIndex == 1) {
                 changePanel(new Input_Barang());
@@ -363,16 +367,16 @@ private void showMenu(int index, int subIndex) {
             } else if (index == 2 && subIndex == 3) {
                 changePanel(new Data_Pengguna());
             } else if (index == 3 && subIndex == 0) {
-                changePanel(new Promo());
-            } else if(index == 4 && subIndex == 1)  {
-                changePanel(new Pembelian());
-            } else if(index == 4 && subIndex == 2)  {
-                changePanel(new Penjualan());
-            } else if(index == 5 && subIndex == 1)  {
+                    changePanel(new Promo());
+            } else if(index == 4 && subIndex == 0)  {
+                changePanel(new Pembelian(id));
+            } else if(index == 5 && subIndex == 0)  {
+                changePanel(new Penjualan(id));
+            } else if(index == 6 && subIndex == 1)  {
                 changePanel(new Barang_Masuk());
-            } else if(index == 5 && subIndex == 2)  {
+            } else if(index == 6 && subIndex == 2)  {
                 changePanel(new Barang_Keluar());
-            } else if(index == 5 && subIndex == 3)  {
+            } else if(index == 6 && subIndex == 3)  {
                 changePanel(new Keuangan());
     }
 }

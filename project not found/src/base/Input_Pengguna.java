@@ -70,7 +70,7 @@ public class Input_Pengguna extends javax.swing.JPanel {
     
 //    tambah data di database
     private void addData(String id_pengguna, String nama_pengguna, String username, String password, String telp_pengguna, String alamat_pengguna, String jabatan) {
-        String query = "INSERT INTO supplier VALUES(?,?,?,?,?,?,?)";
+        String query = "INSERT INTO pengguna VALUES(?,?,?,?,?,?,?)";
         try {
         PreparedStatement pst = connection.prepareStatement(query);
         pst.setString(1, id_pengguna);
@@ -86,6 +86,23 @@ public class Input_Pengguna extends javax.swing.JPanel {
             System.err.println(ex.getMessage());
         } 
     }
+    
+    private void editTable () {
+    int[] selectedRows = Table_pengguna.getSelectedRows();
+    int selectedColumn = Table_pengguna.getSelectedColumn();
+
+    if (selectedRows.length == 1 && selectedColumn != -1) {
+        for (int selectedRow : selectedRows) {
+            Object oldValue = Table_pengguna.getValueAt(selectedRow, selectedColumn);
+            Object newValue = JOptionPane.showInputDialog(null, "Edit value:", oldValue);
+            if (newValue != null) {
+                model.setValueAt(newValue, selectedRow, selectedColumn);
+            }
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Silakan pilih satu baris dan satu kolom untuk diedit.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+}
 
 
     /**
@@ -95,6 +112,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
         initComponents();
         connection = Koneksi.getKoneksi();
         model = (DefaultTableModel) Table_pengguna.getModel();
+        Table_pengguna.getTableHeader().setBackground(new Color(0,40,85));
+        Table_pengguna.getTableHeader().setForeground(Color.WHITE);
     }
     
     private void tambahDataSementara() {
@@ -194,7 +213,7 @@ public class Input_Pengguna extends javax.swing.JPanel {
         jLabel10.setText("Password");
 
         tx_jabatan.setBackground(new java.awt.Color(204, 204, 204));
-        tx_jabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Owner", "karyawan", " " }));
+        tx_jabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Owner", "Karyawan" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -222,9 +241,9 @@ public class Input_Pengguna extends javax.swing.JPanel {
                         .addComponent(tx_nomor)))
                 .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tx_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tx_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,7 +315,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
         jScrollPane3.setViewportView(Table_pengguna);
 
         btn_simpan.setBackground(new java.awt.Color(7, 29, 54));
-        btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/SAVE.png"))); // NOI18N
+        btn_simpan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_simpan.setForeground(new java.awt.Color(255, 255, 255));
         btn_simpan.setText("Simpan");
         btn_simpan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_simpan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -311,7 +331,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
         });
 
         btn_tmbhpengguna.setBackground(new java.awt.Color(7, 29, 54));
-        btn_tmbhpengguna.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/ADD.png"))); // NOI18N
+        btn_tmbhpengguna.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_tmbhpengguna.setForeground(new java.awt.Color(255, 255, 255));
         btn_tmbhpengguna.setText("Tambah");
         btn_tmbhpengguna.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_tmbhpengguna.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -326,7 +347,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
         });
 
         btn_Edit2.setBackground(new java.awt.Color(7, 29, 54));
-        btn_Edit2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/EDIT.png"))); // NOI18N
+        btn_Edit2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_Edit2.setForeground(new java.awt.Color(255, 255, 255));
         btn_Edit2.setText("Edit");
         btn_Edit2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_Edit2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -341,7 +363,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
         });
 
         btn_batal2.setBackground(new java.awt.Color(7, 29, 54));
-        btn_batal2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/cancel.png"))); // NOI18N
+        btn_batal2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_batal2.setForeground(new java.awt.Color(255, 255, 255));
         btn_batal2.setText("Batal");
         btn_batal2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 197, 162), 3));
         btn_batal2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -356,20 +379,23 @@ public class Input_Pengguna extends javax.swing.JPanel {
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(main_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(581, Short.MAX_VALUE))
+                .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(main_panelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_panelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_tmbhpengguna)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_tmbhpengguna, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(26, 26, 26)
                 .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addGap(31, 31, 31)
+                .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         main_panelLayout.setVerticalGroup(
             main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,15 +404,15 @@ public class Input_Pengguna extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_tmbhpengguna, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_batal2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -402,8 +428,8 @@ public class Input_Pengguna extends javax.swing.JPanel {
             .addGap(0, 640, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(main_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(0, 0, 0)))
+                    .addComponent(main_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -446,7 +472,7 @@ public class Input_Pengguna extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_Edit2MouseClicked
 
     private void btn_Edit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Edit2ActionPerformed
-        // TODO add your handling code here:
+        editTable();
     }//GEN-LAST:event_btn_Edit2ActionPerformed
 
     private void btn_batal2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_batal2MouseClicked
