@@ -175,10 +175,10 @@ public class Dashboard extends javax.swing.JPanel {
      */
     public Dashboard() {
         initComponents();
-        card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/stock.png")), "Barang Masuk Hari Ini", "Increased by 60%"));
-        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/profit.png")), "Barang Keluar Hari Ini", "Increased by 25%"));
-        card3.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/stock.png")), "Total Penjualan", "Increased by 70%"));
-        card4.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/stock.png")), "Total Keuntungan", "Increased by 70%"));
+        card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/stock.png")), "Barang Masuk Hari Ini", ""));
+        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/stock.png")), "Barang Keluar Hari Ini", ""));
+        card3.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/stock.png")), "Total Penjualan", ""));
+        card4.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/profit.png")), "Total Keuntungan", ""));
         init();
         model = new DefaultTableModel();
         Tabledash.setModel(model);
@@ -207,6 +207,8 @@ public class Dashboard extends javax.swing.JPanel {
         } catch (SQLException e) {
             // Tangani kesalahan
             System.out.println("Terjadi kesalahan saat mengambil data penjualan: " + e.getMessage());
+                   Tabledash.getTableHeader().setBackground(new Color(0,40,85));
+       Tabledash.getTableHeader().setForeground(Color.WHITE);
         }
     }
     
@@ -271,7 +273,7 @@ public class Dashboard extends javax.swing.JPanel {
         lb_BarangKeluar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lb_BarangKeluar.setForeground(new java.awt.Color(255, 255, 255));
         lb_BarangKeluar.setText("jLabel2");
-        jPanel3.add(lb_BarangKeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, -1, -1));
+        jPanel3.add(lb_BarangKeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 60, -1));
 
         card2.setColor1(new java.awt.Color(186, 123, 247));
         card2.setColor2(new java.awt.Color(167, 94, 236));
@@ -280,7 +282,7 @@ public class Dashboard extends javax.swing.JPanel {
         lb_TotalPenjualan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lb_TotalPenjualan.setForeground(new java.awt.Color(255, 255, 255));
         lb_TotalPenjualan.setText("jLabel2");
-        jPanel3.add(lb_TotalPenjualan, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 200, -1, -1));
+        jPanel3.add(lb_TotalPenjualan, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 200, -1, -1));
 
         card3.setColor1(new java.awt.Color(241, 208, 62));
         card3.setColor2(new java.awt.Color(211, 184, 61));
